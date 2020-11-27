@@ -12,7 +12,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Input />
-      <Spacer size= {4} onLayout={e=>{}}/>
+      <Spacer size= {4} />
       <Input />
      </View>
   );
