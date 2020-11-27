@@ -1,19 +1,43 @@
-import React from 'react'
-import {StyleSheet, Text, TextImput, View } from 'react-native'
+import React, { useState } from 'react'
+import { StyleSheet, Text, TextInput, View } from 'react-native'
 
-const Input = ()=>{
-    return(
-        <View style = {} >
+const Input = ({
+  containerStyle,
+  labelStyle,
+  inputStyle
+}) => {
+  const [text, setText] = useState('')
 
-
-        </View>
-    )
+  return (
+    <View style={[styles.container, containerStyle]}>
+      <Text style={[styles.label, labelStyle]}>Label</Text>
+      <TextInput
+        style={[styles.input, inputStyle]}
+        value={text}
+        onChangeText={value => setText(value)}
+        // onChangeText={setText}
+      />
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
-    conntainer: {
-        flex: 1,
-        backgroundColor: '#ff'
-
-    }
+  container: {
+    paddingTop: 20
+  },
+  input: {
+    height: 40,
+    borderBottomWidth: 2,
+    // borderTopWidth: 2,
+    borderBottomColor: '#000',
+    // borderTopColor: '#000'
+  },
+  label: {
+    position: 'absolute',
+    top: 0,
+    fontSize: 20,
+    lineHeight: 20
+  }
 })
+
+export default Input
