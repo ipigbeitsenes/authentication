@@ -1,18 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import Input from './components/Input'
+import Constants from 'expo-constants'
+import ScreenContainer from './components/ScreenContainer'
+import { layoutStyles } from './styles/Layout'
+
+import Spacer from './components/Spacer';
 
 // Initialize a new array with 5 elements
 //  .fill(null) fill the elements with null
 // If this is inside the function, it gets initialized every time
 const arr = (new Array(5)).fill(null)
 
+const StatusBarHeight = Constants.StatusBarHeight
+
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ScreenContainer style={layoutStyles.container}>
+      <StatusBar backgroundColor='red' />
+
+      <View style={styles.container}>
+        <Input />
+        {/* <Spacer size={4} /> */}
+        <Text>First page, life is good</Text>
+        <Input />
+      </View>
+    </ScreenContainer>
+
   );
 }
 
@@ -20,7 +35,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
