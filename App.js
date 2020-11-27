@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import Input from './components/Input'
 import Constants from 'expo-constants'
 import ScreenContainer from './components/ScreenContainer'
@@ -23,8 +23,11 @@ export default function App() {
       <View style={styles.container}>
         <Input />
         {/* <Spacer size={4} /> */}
-        <Text>First page, life is good</Text>
-        <Input />
+        {/* <Text>First page, life is good</Text> */}
+        {/* <Input /> */}
+        {/* <TouchableOpacity name='Toca chi'>
+          <Text>Toca Chi</Text>
+        </TouchableOpacity> */}
       </View>
     </ScreenContainer>
 
