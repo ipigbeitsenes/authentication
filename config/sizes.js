@@ -5,4 +5,3 @@ export default {
   statusBarHeight: Constants.statusBarHeight,
   unitSize: 4
 }
-
