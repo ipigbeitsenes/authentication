@@ -1,16 +1,45 @@
-import React, { useState } from 'react'
-import { useState } from 'react-native'
-import { StyleSheet, View, Text, TextInput } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
+import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 
-const Input = () => {
-    const { text, setText } = useState('')
+const Input = ({
+    containerStyle,
+    labelStyle,
+    inputStyle
+}) => {
+    const [text, setText] = useState('')
+    const [focused, setFocused] = useState()
+    const animation = useRef(new Animated.Value(0)).current
+
+    useEffect(() => {
+        Animated.timing(animation, {
+            //toValue: focused ? 1:0,
+            toValue: +focused,
+            duration: 300,
+            useNativeDriver: true
+        }).start()
+    }, [focused])
+
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Label</Text>
+        <View style={[styles.container, containerStyle]}>
+            <Animated.View
+                style={[styles.labelContainer,
+                {
+                    transform: [{
+                        translateY: animation.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, -30]
+                        })
+                    }]
+                }]}
+            >
+                <Text style={[styles.label, labelStyle]}>Label</Text>
+            </Animated.View>
             <TextInput
-                style={styles.input}
+                style={[styles.input, inputStyle]}
                 value={text}
-                onChangeText={value => { setText }}
+                onChangeText={value => setText(value)}
+                onFocus={() => setFocu}
+                onBlur={() => { }}
             />
         </View>
     )
@@ -22,15 +51,16 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 40,
-        borderBottomWidth: 3,
-        borderBottomColor: '#000'
-
+        borderBottomWidth: 2,
+        borderTopWidth: 2,
+        borderBottomColor: '#000',
     },
     label: {
         position: 'absolute',
-        top: 0,
+        top: 30,
         fontSize: 20,
         lineHeight: 20
     }
 })
+
 export default Input

@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Input from './components/Input.js'
-
-export default function App() {
-  return (
-    <View style={}>
-      <Input />
-    </View>
-  );
-=======
 import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { StyleSheet, Text, View } from 'react-native'
@@ -35,7 +22,6 @@ export default function App() {
     // <View style={styles.container}>
     // </View>
   )
->>>>>>> master
 }
 
 const styles = StyleSheet.create({
