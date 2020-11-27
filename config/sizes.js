@@ -1,7 +1,7 @@
 import Constants from 'expo-constants'
 
 export default {
-    statusBarHeight: Constants.statusBarHeight,
-    containerSpacer: 20,
-    unitSize: 4;
+  containerSpace: 20,
+  statusBarHeight: Constants.statusBarHeight,
+  unitSize: 4
 }
