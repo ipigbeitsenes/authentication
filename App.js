@@ -8,6 +8,8 @@ import Spacer from './components/Spacer'
 const statusBarHeight = Constants.statusBarHeight
 
 export default function App() {
+  const passwordInput = useRef()  // ci serve per fare focus sull'input in cui la applichiamo
+
   return (
     <View style={styles.container}>
       <Input />
@@ -22,4 +24,4 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff'
   },
-});
+})
