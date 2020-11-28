@@ -92,6 +92,7 @@ https://tree-rn-server.herokuapp.com/authentication/signup-action
   surname: string,
   email: string,
   password: string,
-  password_confirmation: string
+  password_confirmation: string,
+  username: string
 }
 ```
