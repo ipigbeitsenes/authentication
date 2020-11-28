@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import sizes from '../config/sizes'
 
+// questo componente è l'equivalente di SafeAreaView
 const ScreenContainer = ({
   children,
   style,
