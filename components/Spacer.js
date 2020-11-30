@@ -2,11 +2,15 @@ import React from 'react'
 import { View } from 'react-native'
 import sizes from '../config/sizes'
 
-// const Spacer = (props) => {
+/**
+ * Componente utile a creare spaziature
+ * senza dovere applicare margini o padding 
+ * agli altri componenti
+ */
 const Spacer = ({
-  size = 0,
+  size = 0, // valore di default
   horizontal,
-  ...props
+  ...props // props di View aggiuntive
 }) => {
   return (
     <View style={{
@@ -16,6 +20,11 @@ const Spacer = ({
   )
 }
 
+/**
+ * questo si fa sia con i class components che con i function components,
+ * anche se per i function component è decisamente meglio che fare come è stato
+ * fatto sopra
+ */
 // Spacer.defaultProps = {
 //   size: 0
 // }
