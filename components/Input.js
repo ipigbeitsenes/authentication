@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React, { useEffect, useRef, useState } from 'react'
-=======
 import React, { useRef, useEffect, useState, forwardRef } from 'react'
->>>>>>> master
 import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 
 /**
@@ -21,58 +17,26 @@ const Input = forwardRef(({
 }, ref) => {
   const [text, setText] = useState('')
   const [focused, setFocused] = useState(false)
-<<<<<<< HEAD
-=======
   /**
    * creiamo un Animated.Value con valore iniziale 0 che ci
    * servirà per eseguire l'animazione tramite Animated.timing
    * e per utilizzare il suo valore dentro il transform delle
    * Animated.View che abbiamo integrato
    */
->>>>>>> master
   const animation = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     Animated.timing(animation, {
-<<<<<<< HEAD
-      toValue: +(focused || (!focuse && !!text)),
-      duration: 300,
-      useNativeDriver: true
-=======
       // toValue: focused ? 1 : 0,
       // toValue: +focused, // stessa cosa che sopra
       toValue: +(focused || (!focused && !!text)), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus
       duration: 300,
       useNativeDriver: true // mettere `true` solamente se le proprietà che andremo ad animare sono `transform` e `opacity`
->>>>>>> master
     }).start()
   }, [focused])
 
   return (
     <View style={[styles.container, containerStyle]}>
-<<<<<<< HEAD
-    <Animated.View
-      style={(
-        styles.labelContainer,
-        {
-          transform: [{
-            translateY: animation.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, -30]
-            })
-          }]
-        }
-      )}
-      >
-        <Text style={[styles.label, labelStyle]}>Label</Text>
-      </Animated.View>
-      <TextInput
-        style={[
-          styles.input, 
-          {
-          borderBottomColor: focused ? '#0f0' : '#000'
-          }, 
-=======
       <Animated.View
         style={[
           styles.labelContainer,
@@ -103,16 +67,10 @@ const Input = forwardRef(({
           // {
           //   borderBottomColor: focused ? '#0f0' : '#000'
           // },
->>>>>>> master
           inputStyle
         ]}
         value={text}
         onChangeText={value => setText(value)}
-<<<<<<< HEAD
-        onFocus={() => setFocused (true)}
-        onBlur={() => setFocused (false)}
-        // onChangeText={setText}
-=======
         // onChangeText={setText} // stessa cosa che la riga sopra
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
@@ -136,7 +94,6 @@ const Input = forwardRef(({
             })
           }]
         }}
->>>>>>> master
       />
     </View>
   )
@@ -149,16 +106,11 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     borderBottomWidth: 2,
-<<<<<<< HEAD
-    borderBottomColor: '#000',
-  },
-=======
     borderBottomColor: '#000'
   },
   inputFocused: {
     borderBottomColor: '#0f0'
   },
->>>>>>> master
   labelContainer: {
     position: 'absolute',
     top: 30
