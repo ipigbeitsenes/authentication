@@ -22,6 +22,14 @@ export default function SignupScreen(props) {
     setFormValues(newFormValues)
 
     const notEmptyKeys = Object.keys(newFormValues).filter((key) => newFormValues[key] !== '')
+
+    // esempio esplicito del every
+    // let formIsValid = true
+    // requiredInputs.forEach((input) => {
+    //   if (!notEmptyKeys.includes(input)) {
+    //     formIsValid = false
+    //   }
+    // })
     setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
   }
 
