@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, forwardRef } from 'react'
 import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 
-const Input = forwardRef(({
+const Input = forwardRef(({ //?
   containerStyle,
   labelStyle,
   inputStyle,
@@ -11,13 +11,13 @@ const Input = forwardRef(({
 }, ref) => {
   const [text, setText] = useState('')
   const [focused, setFocused] = useState(false)
-  const animation = useRef(new Animated.Value(0)).current
+  const animation = useRef(new Animated.Value(0)).current//?
 
   useEffect(() => {
-    Animated.timing(animation, {
+    Animated.timing(animation, {//?
       // toValue: focused ? 1 : 0,
       toValue: +(focused || (!focused && !!text)), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus
-      duration: 300,
+      duration: 500,
       useNativeDriver: true
     }).start()
   }, [focused])
@@ -36,7 +36,7 @@ const Input = forwardRef(({
           // },
           {
             transform: [{
-              translateY: animation.interpolate({
+              translateY: animation.interpolate({//?
                 inputRange: [0, 1],
                 outputRange: [0, -30]
               })
@@ -70,7 +70,7 @@ const Input = forwardRef(({
         style={{
           width: '100%',
           height: 2,
-          backgroundColor: '#0f0',
+          backgroundColor: '#00ffff',
           position: 'absolute',
           bottom: 0,
           transform: [{
