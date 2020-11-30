@@ -18,6 +18,8 @@ export default function App() {
       <Input />
       {/* <Spacer size={4} />
       <Input /> */}
+
+      
     </ScreenContainer>
     // <View style={styles.container}>
     // </View>
