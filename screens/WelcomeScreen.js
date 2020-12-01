@@ -1,5 +1,4 @@
 import React from 'react'
-import { Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Title from '../components/Title'
 import Button from '../components/Button'
