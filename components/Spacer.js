@@ -1,23 +1,3 @@
-<<<<<<< HEAD
-import React from 'react';
-import sizes from '../config/sizes'
-import { View } from 'react-native'
-
-const Spacer = ({
-    size = 0,
-    horizontal,
-}) => {
-    return (
-        <View style={{
-            width: horizontal ? size * sizes.unitSize : 0,
-            height: horizontal ? 0 : size * sizes.unitSize
-        }} {...props}
-        />
-    );
-};
-
-export default Spacer;
-=======
 import React from 'react'
 import { View } from 'react-native'
 import sizes from '../config/sizes'
@@ -36,7 +16,7 @@ const Spacer = ({
     <View style={{
       width: horizontal ? size * sizes.unitSize : 0,
       height: horizontal ? 0 : size * sizes.unitSize
-    }} { ...props } />
+    }} {...props} />
   )
 }
 
@@ -50,4 +30,3 @@ const Spacer = ({
 // }
 
 export default Spacer
->>>>>>> a80a778f58d5677646a4927de1baccdb6213557b
