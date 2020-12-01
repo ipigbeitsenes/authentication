@@ -13,6 +13,7 @@ const Input = forwardRef(({
   inputStyle,
   isPassword,
   label = 'Placeholder',
+  onTextChange = () => {},
   ...props // props native di TextInput
 }, ref) => {
   const [text, setText] = useState('')
@@ -25,59 +26,78 @@ const Input = forwardRef(({
    */
   const animation = useRef(new Animated.Value(0)).current
 
+  // gestione della animazione al cambio focus dell'input
   useEffect(() => {
+    let toValue = 0
+    if (focused) {
+      toValue = 1
+    }
+    if (!focused && !!text) {
+      toValue = 2
+    }
     Animated.timing(animation, {
       // toValue: focused ? 1 : 0,
       // toValue: +focused, // stessa cosa che sopra
-      toValue: +(focused || (!focused && !!text)), // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus
+      toValue: toValue, // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Unary_plus
       duration: 300,
-      useNativeDriver: true // mettere `true` solamente se le proprietà che andremo ad animare sono `transform` e `opacity`
+      useNativeDriver: false
+      // useNativeDriver: true // mettere `true` solamente se le proprietà che andremo ad animare sono `transform` e `opacity`
     }).start()
   }, [focused])
+
+  // invio del contenuto dell'input al cambio di valore di text
+  useEffect(() => {
+    onTextChange(text)
+  }, [text])
 
   return (
     <View style={[styles.container, containerStyle]}>
       <Animated.View
         style={[
           styles.labelContainer,
-          // questo metodo è valido ma funziona solo su android
-          // {
-          //   translateY: animation.interpolate({
-          //     inputRange: [0, 1],
-          //     outputRange: [0, -30]
-          //   })
-          // },
           {
+            zIndex: 1,
             transform: [{
               translateY: animation.interpolate({
-                inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
-                outputRange: [0, -30] // il valore di translate basato sui valori di Animated.Value
+                inputRange: [0, 1, 2], // i valori di Animated.Value, gestiti all'interno di useEffect
+                outputRange: [0, -30, -30] // il valore di translate basato sui valori di Animated.Value
               })
-            }]
+            }],
           }
         ]}
       >
         <Text style={[styles.label, labelStyle]}>{label}</Text>
       </Animated.View>
-      <TextInput
+      <Animated.View
         style={[
-          styles.input,
-          // possiamo cambiare styles anche in base a delle variabili
-          // focused ? styles.inputFocused : undefined,
-          // {
-          //   borderBottomColor: focused ? '#0f0' : '#000'
-          // },
-          inputStyle
+          {
+            backgroundColor: animation.interpolate({
+              inputRange: [0, 1, 2], // i valori di Animated.Value, gestiti all'interno di useEffect
+              outputRange: ['red', 'green', 'yellow'] // il valore di translate basato sui valori di Animated.Value
+            })
+          }
         ]}
-        value={text}
-        onChangeText={value => setText(value)}
-        // onChangeText={setText} // stessa cosa che la riga sopra
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        secureTextEntry={isPassword}
-        ref={ref}
-        { ...props }
-      />
+      >
+        <TextInput
+          style={[
+            styles.input,
+            // possiamo cambiare styles anche in base a delle variabili
+            // focused ? styles.inputFocused : undefined,
+            // {
+            //   borderBottomColor: focused ? '#0f0' : '#000'
+            // },
+            inputStyle
+          ]}
+          value={text}
+          onChangeText={value => setText(value)}
+          // onChangeText={setText} // stessa cosa che la riga sopra
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          secureTextEntry={isPassword}
+          ref={ref}
+          { ...props }
+        />
+      </Animated.View>
 
       {/* TRANSFORM ORIGIN https://github.com/sueLan/react-native-anchor-point */}
       <Animated.View
@@ -89,8 +109,8 @@ const Input = forwardRef(({
           bottom: 0,
           transform: [{
             scaleX: animation.interpolate({
-              inputRange: [0, 1],
-              outputRange: [0, 1],
+              inputRange: [0, 1, 2],
+              outputRange: [0, 0.5, 1],
             })
           }]
         }}
@@ -122,3 +142,47 @@ const styles = StyleSheet.create({
 })
 
 export default Input
+
+
+/**
+ * Esempio base componente definita tramite classi.
+ */
+
+// import React, { useRef, useEffect, useState, forwardRef } from 'react'
+// import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
+
+// class Input extends React.Component {
+
+//   constructor(props) {
+//     super(props)
+
+//     this.state = {
+//       text: '',
+//       focused: false
+//     }
+//   }
+
+//   getText() {
+//     return this.state.text
+//   }
+
+//   render() {
+//     return (
+//       <View style={{ backgroundColor: 'red' }}>
+//       <TextInput
+//         value={this.state.text}
+//         onChangeText={value => this.setState({ text: value })}
+//         // onChangeText={setText} // stessa cosa che la riga sopra
+//         onFocus={() => this.setState({ focused: true })}
+//         onBlur={() => this.setState({ focused: false })}
+//         { ...this.props }
+//       />
+//       </View>
+//     )
+//   }
+
+// }
+
+// export default Input
+
+
