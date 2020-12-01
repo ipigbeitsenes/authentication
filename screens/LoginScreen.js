@@ -4,23 +4,28 @@ import Input from '../components/Input'
 import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
-// import Alert from '...'
+import Alert from '../components/Alert'
 
 export default function LoginScreen(props) {
   const [formValues, setFormValues] = useState({})
   const [formValid, setFormValid] = useState(false)
+  const [alert, setAlert] = useState(false)
   const passwordInput = useRef()
   const requiredInputs = ['username', 'password']
 
   const submitLogin = () => {
+    setAlert(true);
     setTimeout(() => { // finta chiamata alle API
-      const response = { result: false, error: 'Username non valido' } // finta risposta delle API
-      // attivare l'alert e mostrare il risultato della richiesta
+      const response = {
+        result: false,
+        error: 'Username non valido',
+        typology: 'danger'
+      }
     }, 500)
   }
 
   const changeFormValue = (name, value) => {
-    const newFormValues = {...formValues}
+    const newFormValues = { ...formValues }
     newFormValues[name] = value
     setFormValues(newFormValues)
 
@@ -28,9 +33,10 @@ export default function LoginScreen(props) {
     setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
   }
 
+
   return (
     <ScreenContainer>
-      <Alert status={true} message="Username non valido" typology="danger" onClose={() => {}} />
+      <Alert status={alert} message="Username non valido" typology="danger" onClose={() => { setAlert(false) }} />
       <Title label="Login" centerText />
       <Spacer size={20} />
       <Input
@@ -45,7 +51,7 @@ export default function LoginScreen(props) {
       <Input
         label="Password"
         ref={passwordInput}
-        isPassword 
+        isPassword
         onTextChange={(text) => changeFormValue('password', text)}
       />
       <Spacer size={5} />
