@@ -4,6 +4,7 @@ import Input from '../components/Input'
 import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
+// import Alert from '...'
 
 export default function LoginScreen(props) {
   const [formValues, setFormValues] = useState({})
@@ -12,7 +13,10 @@ export default function LoginScreen(props) {
   const requiredInputs = ['username', 'password']
 
   const submitLogin = () => {
-    console.log(username, password)
+    setTimeout(() => { // finta chiamata alle API
+      const response = { result: false, error: 'Username non valido' } // finta risposta delle API
+      // attivare l'alert e mostrare il risultato della richiesta
+    }, 500)
   }
 
   const changeFormValue = (name, value) => {
@@ -26,6 +30,7 @@ export default function LoginScreen(props) {
 
   return (
     <ScreenContainer>
+      <Alert status={true} message="Username non valido" typology="danger" onClose={() => {}} />
       <Title label="Login" centerText />
       <Spacer size={20} />
       <Input
