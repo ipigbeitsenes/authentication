@@ -1,18 +1,26 @@
-import React from 'react';
-import sizes from '../config/sizes';
-import {View, StyleSheet} from 'react-native';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import sizes from '../config/sizes'
 
-const ScreenContainer = ({children, style}) => {
-    return(
-        <View style ={[{}, style]}>{children}</View>
-    )
+const ScreenContainer = ({
+  children,
+  style,
+  ...props
+}) => {
+  return (
+    <View
+      style={[styles.container, style]}
+      { ...props }
+    >{children}</View>
+  )
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        paddindTop: sizes.statusBarHeigth
-    }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingTop: sizes.statusBarHeight
+  }
 })
 
-export default ScreenContainer;
+export default ScreenContainer
