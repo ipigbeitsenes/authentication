@@ -17,7 +17,7 @@ export default function SignupScreen(props) {
   }
 
   const changeFormValue = (name, value) => {
-    const newFormValues = {...formValues}
+    const newFormValues = { ...formValues }
     newFormValues[name] = value
     setFormValues(newFormValues)
 
@@ -46,13 +46,13 @@ export default function SignupScreen(props) {
       <Spacer size={10} />
       <Input
         label="Password"
-        isPassword 
+        isPassword
         onTextChange={(text) => changeFormValue('password', text)}
       />
       <Spacer size={10} />
       <Input
         label="Conferma password"
-        isPassword 
+        isPassword
         onTextChange={(text) => changeFormValue('password_confirmation', text)}
       />
       <Spacer size={5} />
