@@ -1,16 +1,4 @@
 import React from 'react'
-<<<<<<< HEAD
-import {View, Text} from 'react-native'
-
-function WelcomeScreen () {
-    return (
-        <View>
-            <Text>welcome</Text>
-        </View>
-    )
-}
-export default WelcomeScreen
-=======
 import { Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Title from '../components/Title'
@@ -34,4 +22,3 @@ export default function WelcomeScreen(props) {
     </ScreenContainer>
   )
 }
->>>>>>> master

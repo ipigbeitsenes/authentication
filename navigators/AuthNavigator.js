@@ -1,19 +1,4 @@
 import React from 'react'
-<<<<<<< HEAD
-import { createStackNavigator } from '@react-navigation/stack';
-import WelcomScreen from '../screens/WelcomeScreen'
-
-export default function AuthNavigator () {
-    const AuthStack = createStackNavigator();
-    return (
-        <AuthStack.navigator>
-            <AuthStack.screen name='welcom' component= {WelcomScreen} /> 
-        </AuthStack.navigator>
-    )
-}
-
- 
-=======
 import { createStackNavigator } from '@react-navigation/stack'
 import WelcomeScreen from '../screens/WelcomeScreen'
 import LoginScreen from '../screens/LoginScreen'
@@ -35,4 +20,3 @@ export default function AuthNavigator () {
     </AuthStack.Navigator>
   )
 }
->>>>>>> master
