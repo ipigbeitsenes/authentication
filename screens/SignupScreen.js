@@ -23,13 +23,14 @@ export default function SignupScreen(props) {
 
     const notEmptyKeys = Object.keys(newFormValues).filter((key) => newFormValues[key] !== '')
 
-    // esempio esplicito del every
+    // esempio esplicito di funzionamento del metodo every() (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
     // let formIsValid = true
     // requiredInputs.forEach((input) => {
     //   if (!notEmptyKeys.includes(input)) {
     //     formIsValid = false
     //   }
     // })
+
     setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
   }
 
@@ -39,7 +40,7 @@ export default function SignupScreen(props) {
       <Spacer size={20} />
       <Input
         label="Username"
-        blurOnSubmit={false} // serve a non far chiudere la tastiera quando si fa focus tramite passwordInput.current.focus()
+        blurOnSubmit={false}
         onTextChange={(text) => changeFormValue('username', text)}
       />
       <Spacer size={10} />
