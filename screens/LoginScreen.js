@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { Text, View, Alert } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
 import Spacer from '../components/Spacer'
@@ -12,8 +13,11 @@ export default function LoginScreen(props) {
   const requiredInputs = ['username', 'password']
 
   const submitLogin = () => {
-    console.log(username, password)
-  }
+  setTimeout(() => { // finta chiamata alle API
+    const response = { result: false, error: 'Username non valido' } // finta risposta delle API
+    // attivare l'alert e mostrare il risultato della richiesta
+  }, 500)
+}
 
   const changeFormValue = (name, value) => {
     const newFormValues = {...formValues}
@@ -26,6 +30,7 @@ export default function LoginScreen(props) {
 
   return (
     <ScreenContainer>
+      <Alert status={true} message="Username non valido" typology="danger" onClose={() => {}} />
       <Title label="Login" centerText />
       <Spacer size={20} />
       <Input
@@ -40,7 +45,7 @@ export default function LoginScreen(props) {
       <Input
         label="Password"
         ref={passwordInput}
-        isPassword 
+        isPassword
         onTextChange={(text) => changeFormValue('password', text)}
       />
       <Spacer size={5} />
