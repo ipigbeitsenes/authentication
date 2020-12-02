@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-import { View, Text } from 'react-native'
-import Button from './Button'
-
-export default function Alert(props){
-    return (
-    <View>
-
-    </View>
-    )
-}
-
-=======
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Animated, StyleSheet, View, Text } from 'react-native'
@@ -84,22 +70,10 @@ const styles = StyleSheet.create({
   }
 })
 
->>>>>>> master
 // COMPONENT PROPS
 /////////////////////////////////////////////////////////////////////
 
 Alert.propTypes = {
-<<<<<<< HEAD
-    status: PropTypes.bool.isRequired,
-    message: PropTypes.string.isRequired,
-    typology: PropTypes.string,
-    onClose: PropTypes.func
-  }
-  
-Alert.defaultProps = {
-    typology: 'succes'
-  }
-=======
   status: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   typology: PropTypes.oneOf(['success', 'danger']),
@@ -109,4 +83,3 @@ Alert.defaultProps = {
 Alert.defaultProps = {
   typology: 'success'
 }
->>>>>>> master

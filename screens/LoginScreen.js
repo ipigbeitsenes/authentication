@@ -6,6 +6,7 @@ import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
 import Alert from '../components/Alert'
+import useForm from '../hooks/useForm'
 
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
@@ -45,10 +46,17 @@ export default function LoginScreen(props) {
     setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
   }
 
+  // funzione che chiude l'alert senza modificare message e typology
+  const closeAlert = () => {
+    const newAlertProps = {...alertProps}
+    newAlertProps.status = false
+    setAlertProps(newAlertProps)
+  } 
+
   return (
     <ScreenContainer>
       {/* <Alert status={alertProps.status} message={alertProps.message} typology={alertProps.typology} onClose={() => {}} /> */}
-      <Alert {...alertProps} onClose={() => setAlertProps(alertPropsDefault)} />
+      <Alert {...alertProps} onClose={() => closeAlert()} />
       <Title label="Login" centerText />
       <Spacer size={20} />
       <Input

@@ -10,7 +10,14 @@ export default function SignupScreen(props) {
   const [formValid, setFormValid] = useState(false)
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
 
-  // const [formData, setFormValue] = useForm(['username', 'email', 'password', 'password_confirmation', 'name', 'surname'])
+  const [formData, setFormValue] = useForm(['username', 'email', 'password', 'password_confirmation', 'name', 'surname'])
+
+  formData = {
+    values: {
+      username: '...'
+    },
+    valid: true|false
+  }
 
   const submitSignup = () => {
     console.log(username, password)
