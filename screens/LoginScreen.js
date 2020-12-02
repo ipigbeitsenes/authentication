@@ -53,11 +53,7 @@ export default function LoginScreen(props) {
     const newAlertProps = {...alertProps}
     newAlertProps.status = false
     setAlertProps(newAlertProps)
-<<<<<<< HEAD
-  } 
-=======
   }
->>>>>>> master
 
   return (
     <ScreenContainer>

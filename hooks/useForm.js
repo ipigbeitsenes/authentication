@@ -1,26 +1,8 @@
 import React, { useState } from 'react'
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 /**
  * @function useForm
  * @param {array} requiredInputs -> Lista dei campi del form obbligatori.
  */
-<<<<<<< HEAD
-
-export default useForm(requiredInputs){
-    const [formValues, setFormValues] = useState({})
-    const [formValid, setFormValid] = useState (false)
-
-    const formData = {
-        values: formValues,
-        valid: formValid
-    }
-
-    return [formData, setFormValue]
-
-=======
 export default function useForm(requiredInputs) {
   const [formValues, setFormValues] = useState({})
   const [formValid, setFormValid] = useState(false)
@@ -49,5 +31,4 @@ export default function useForm(requiredInputs) {
   }
 
   return [formData, setFormValue]
->>>>>>> master
 }

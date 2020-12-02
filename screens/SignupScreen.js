@@ -8,19 +8,7 @@ import useForm from '../hooks/useForm'
 
 export default function SignupScreen(props) {
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
-<<<<<<< HEAD
-
-  const [formData, setFormValue] = useForm(['username', 'email', 'password', 'password_confirmation', 'name', 'surname'])
-
-  formData = {
-    values: {
-      username: '...'
-    },
-    valid: true|false
-  }
-=======
   const [formData, setFormValue] = useForm(requiredInputs)
->>>>>>> master
 
   const submitSignup = () => {
     console.log('Signup completed', formData)
