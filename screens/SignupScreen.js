@@ -1,66 +1,85 @@
 import React, { useState } from 'react'
+import { ScrollView } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
 import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
+import useForm from '../hooks/useForm'
+import apis from '../config/apis'
 
 export default function SignupScreen(props) {
-  const [formValues, setFormValues] = useState({})
-  const [formValid, setFormValid] = useState(false)
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
-
-  // const [formData, setFormValue] = useForm(['username', 'email', 'password', 'password_confirmation', 'name', 'surname'])
+  const [formData, setFormValue] = useForm(requiredInputs)
+  const [requestRunning, setRequestRunning] = useState(false)
 
   const submitSignup = () => {
-    console.log(username, password)
-  }
+    // verifico che non ci siano altre richieste in corso
+    if (requestRunning) return
 
-  const changeFormValue = (name, value) => {
-    const newFormValues = {...formValues}
-    newFormValues[name] = value
-    setFormValues(newFormValues)
+    // imposto la richiesta come in corso
+    setRequestRunning(true)
 
-    const notEmptyKeys = Object.keys(newFormValues).filter((key) => newFormValues[key] !== '')
-
-    // esempio esplicito di funzionamento del metodo every() (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
-    // let formIsValid = true
-    // requiredInputs.forEach((input) => {
-    //   if (!notEmptyKeys.includes(input)) {
-    //     formIsValid = false
-    //   }
-    // })
-
-    setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
+    // invio richiesta
+    fetch(`${apis.baseUrl}/authentication/signup-action`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData.values)
+    }).then((response) => {
+      return response.json()
+    }).then((response) => {
+      setRequestRunning(false)
+      console.log(response)
+    }).catch((e) => {
+      setRequestRunning(false)
+    })
   }
 
   return (
-    <ScreenContainer>
-      <Title label="Login" centerText />
-      <Spacer size={20} />
-      <Input
-        label="Username"
-        blurOnSubmit={false}
-        onTextChange={(text) => changeFormValue('username', text)}
-      />
-      <Spacer size={10} />
-      <Input
-        label="Password"
-        isPassword 
-        onTextChange={(text) => changeFormValue('password', text)}
-      />
-      <Spacer size={10} />
-      <Input
-        label="Conferma password"
-        isPassword 
-        onTextChange={(text) => changeFormValue('password_confirmation', text)}
-      />
-      <Spacer size={5} />
-      <Button
-        title="Registrati"
-        disabled={!formValid}
-        onPress={submitSignup}
-      />
-    </ScreenContainer>
+    <ScrollView>
+      <ScreenContainer>
+        <Title label="Registrazione" centerText />
+        <Spacer size={20} />
+        <Input
+          label="Username"
+          blurOnSubmit={false}
+          onTextChange={(text) => setFormValue('username', text)}
+        />
+        <Spacer size={10} />
+        <Input
+          label="Email"
+          blurOnSubmit={false}
+          onTextChange={(text) => setFormValue('email', text)}
+        />
+        <Spacer size={10} />
+        <Input
+          label="Name"
+          blurOnSubmit={false}
+          onTextChange={(text) => setFormValue('name', text)}
+        />
+        <Spacer size={10} />
+        <Input
+          label="Surname"
+          blurOnSubmit={false}
+          onTextChange={(text) => setFormValue('surname', text)}
+        />
+        <Spacer size={10} />
+        <Input
+          label="Password" 
+          onTextChange={(text) => setFormValue('password', text)}
+        />
+        <Spacer size={10} />
+        <Input
+          label="Conferma password" 
+          onTextChange={(text) => setFormValue('password_confirmation', text)}
+        />
+        <Spacer size={5} />
+        <Button
+          title="Registrati"
+          disabled={requestRunning || !formData.valid}
+          onPress={submitSignup}
+        />
+      </ScreenContainer>
+    </ScrollView>
   )
 }

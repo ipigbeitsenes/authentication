@@ -28,7 +28,7 @@ export default function Alert(props) {
     <>
       <Animated.View style={[styles.container, typologyContainerStyle, {
         transform: [{
-          scaleY: animation.interpolate({
+          scale: animation.interpolate({
             inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
             outputRange: [0, 1] // il valore di translate basato sui valori di Animated.Value
           })
@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   containerSuccess: {
-    backgroundColor: 'green'
+    backgroundColor: colors.green
   },
   containerDanger: {
-    backgroundColor: 'red'
+    backgroundColor: colors.red
   },
   message: {
     color: colors.white,
