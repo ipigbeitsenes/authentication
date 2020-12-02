@@ -36,7 +36,7 @@ export default function SignupScreen(props) {
 
   return (
     <ScreenContainer>
-      <Title label="Login" centerText />
+      <Title label="Signup" centerText />
       <Spacer size={20} />
       <Input
         label="Username"
