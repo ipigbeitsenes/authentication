@@ -10,11 +10,11 @@ import Alert from '../components/Alert'
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
 export default function LoginScreen(props) {
-  const [formValues, setFormValues] = useState({})
-  const [formValid, setFormValid] = useState(false)
+  
   const [alertProps, setAlertProps] = useState(alertPropsDefault)
   const passwordInput = useRef()
   const requiredInputs = ['username', 'password']
+  const [formData, setFormValue] = useForm(requiredInputs)
 
   const submitLogin = () => {
     setTimeout(() => { // finta chiamata alle API
@@ -25,7 +25,7 @@ export default function LoginScreen(props) {
 
   // funzione che verifica se l'username è già utilizzato da altri utenti
   const submitUsername = () => {
-    if (!formValues.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
+    if (!formData.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
 
     setTimeout(() => { // finta chiamata alle API
       const response = { result: false, error: 'Username già utilizzato' } // finta risposta delle API
