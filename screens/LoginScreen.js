@@ -10,11 +10,10 @@ import Alert from '../components/Alert'
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
 export default function LoginScreen(props) {
-  const [formValues, setFormValues] = useState({})
-  const [formValid, setFormValid] = useState(false)
+  const requiredInputs = ['username', 'password']
+  const [formData, setFormValue] = useForm(requiredInputs)
   const [alertProps, setAlertProps] = useState(alertPropsDefault)
   const passwordInput = useRef()
-  const requiredInputs = ['username', 'password']
 
   const submitLogin = () => {
     setTimeout(() => { // finta chiamata alle API
@@ -25,7 +24,7 @@ export default function LoginScreen(props) {
 
   // funzione che verifica se l'username è già utilizzato da altri utenti
   const submitUsername = () => {
-    if (!formValues.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
+    if (!formData.values.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
 
     setTimeout(() => { // finta chiamata alle API
       const response = { result: false, error: 'Username già utilizzato' } // finta risposta delle API
@@ -36,16 +35,7 @@ export default function LoginScreen(props) {
   }
 
   // funzione che aggiorna il valore di un campo del form
-  const changeFormValue = (name, value) => {
-    setAlertProps(alertPropsDefault)
-
-    const newFormValues = {...formValues}
-    newFormValues[name] = value
-    setFormValues(newFormValues)
-
-    const notEmptyKeys = Object.keys(newFormValues).filter((key) => newFormValues[key] !== '')
-    setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
-  }
+  
 
   // funzione che chiude l'alert senza modificare message e typology
   const closeAlert = () => {
@@ -66,7 +56,7 @@ export default function LoginScreen(props) {
           passwordInput.current.focus() // quando si fa "invio" sulla tastiera il focus viene spostato all'input successivo
         }}
         blurOnSubmit={false} // serve a non far chiudere la tastiera quando si fa focus tramite passwordInput.current.focus()
-        onTextChange={(text) => changeFormValue('username', text)}
+        onTextChange={(text) => setFormValue('username', text)}
         autoCapitalize='none'
         onBlur={() => {
           submitUsername()
@@ -77,12 +67,12 @@ export default function LoginScreen(props) {
         label="Password"
         ref={passwordInput}
         isPassword
-        onTextChange={(text) => changeFormValue('password', text)}
+        onTextChange={(text) => setFormValue('password', text)}
       />
       <Spacer size={5} />
       <Button
         title="Accedi"
-        disabled={!formValid}
+        disabled={!formData.valid}
         onPress={submitLogin}
       />
     </ScreenContainer>
