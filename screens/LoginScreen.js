@@ -6,6 +6,7 @@ import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
 import Alert from '../components/Alert'
+import useFrom from '../hooks/useForm'
 
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
@@ -34,7 +35,7 @@ export default function LoginScreen(props) {
     }, 500)
   }
 
-  const changeFormValue = (name, value) => {
+  const setForm = (name, value) => {
     setAlertProps(alertPropsDefault)
 
     const newFormValues = {...formValues}
@@ -43,6 +44,12 @@ export default function LoginScreen(props) {
 
     const notEmptyKeys = Object.keys(newFormValues).filter((key) => newFormValues[key] !== '')
     setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
+  }
+
+  const closeAlert = () => {
+    const newAlertProps = {...alertProps}
+    newAlertProps.status= false
+    setAlertProps(newAlertProps)
   }
 
   return (
@@ -57,7 +64,7 @@ export default function LoginScreen(props) {
           passwordInput.current.focus() // quando si fa "invio" sulla tastiera il focus viene spostato all'input successivo
         }}
         blurOnSubmit={false} // serve a non far chiudere la tastiera quando si fa focus tramite passwordInput.current.focus()
-        onTextChange={(text) => changeFormValue('username', text)}
+        onTextChange={(text) => setForm('username', text)}
         autoCapitalize='none'
         onBlur={() => {
           submitUsername()
@@ -68,7 +75,7 @@ export default function LoginScreen(props) {
         label="Password"
         ref={passwordInput}
         isPassword
-        onTextChange={(text) => changeFormValue('password', text)}
+        onTextChange={(text) => setForm('password', text)}
       />
       <Spacer size={5} />
       <Button
