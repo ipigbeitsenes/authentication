@@ -6,14 +6,15 @@ import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
 import Alert from '../components/Alert'
+import useForm from '../hooks/useForm'
 
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
 export default function LoginScreen(props) {
-  const requiredInputs = ['username', 'password']
-  const [formData, setFormValue] = useForm(requiredInputs)
   const [alertProps, setAlertProps] = useState(alertPropsDefault)
   const passwordInput = useRef()
+  const requiredInputs = ['username', 'password']
+  const [formData, setFormValue] = useForm(requiredInputs)
 
   const submitLogin = () => {
     setTimeout(() => { // finta chiamata alle API
@@ -33,9 +34,6 @@ export default function LoginScreen(props) {
       setAlertProps({ status: true, message: response.error, typology: 'danger' })
     }, 500)
   }
-
-  // funzione che aggiorna il valore di un campo del form
-  
 
   // funzione che chiude l'alert senza modificare message e typology
   const closeAlert = () => {
@@ -58,7 +56,7 @@ export default function LoginScreen(props) {
         blurOnSubmit={false} // serve a non far chiudere la tastiera quando si fa focus tramite passwordInput.current.focus()
         onTextChange={(text) => setFormValue('username', text)}
         autoCapitalize='none'
-        onBlur={() => {
+        onBlurChange={() => {
           submitUsername()
         }}
       />
