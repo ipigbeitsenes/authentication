@@ -1,20 +1,19 @@
 import React, { useRef, useState } from 'react'
-import { Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
 import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
 import Alert from '../components/Alert'
+import useForm from '../hooks/useForm'
 
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
 export default function LoginScreen(props) {
-  const [formValues, setFormValues] = useState({})
-  const [formValid, setFormValid] = useState(false)
+  const requiredInputs = ['username', 'password']
+  const [formData, setFormValue] = useForm(requiredInputs)
   const [alertProps, setAlertProps] = useState(alertPropsDefault)
   const passwordInput = useRef()
-  const requiredInputs = ['username', 'password']
 
   const submitLogin = () => {
     setAlertProps(true);
@@ -24,8 +23,10 @@ export default function LoginScreen(props) {
     }, 500)
   }
 
+  // funzione che verifica se l'username è già utilizzato da altri utenti
   const submitUsername = () => {
-    if (!formValues.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
+    console.log(formData)
+    if (!formData.values.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
 
     setTimeout(() => { // finta chiamata alle API
       const response = { result: false, error: 'Username già utilizzato' } // finta risposta delle API
@@ -35,19 +36,21 @@ export default function LoginScreen(props) {
     }, 500)
   }
 
+  // funzione che aggiorna il valore di un campo del form
   const changeFormValue = (name, value) => {
     setAlertProps(alertPropsDefault)
 
-    const newFormValues = {...formValues}
+    const newFormValues = { ...formData.values }
     newFormValues[name] = value
-    setFormValues(newFormValues)
+    setFormValue(newFormValues)
 
     const notEmptyKeys = Object.keys(newFormValues).filter((key) => newFormValues[key] !== '')
-    setFormValid(requiredInputs.every((el) => notEmptyKeys.includes(el)))
+    setFormValue(requiredInputs.every((el) => notEmptyKeys.includes(el)))
   }
 
-  const onClose = () => {
-    const newAlertProps = {...alertProps}
+  // funzione che chiude l'alert senza modificare message e typology
+  const closeAlert = () => {
+    const newAlertProps = { ...alertProps }
     newAlertProps.status = false
     setAlertProps(newAlertProps)
   }
@@ -55,7 +58,7 @@ export default function LoginScreen(props) {
   return (
     <ScreenContainer>
       {/* <Alert status={alertProps.status} message={alertProps.message} typology={alertProps.typology} onClose={() => {}} /> */}
-      <Alert {...alertProps} onClose={() => onClose()} />
+      <Alert {...alertProps} onClose={() => closeAlert()} />
       <Title label="Login" centerText />
       <Spacer size={20} />
       <Input
@@ -64,7 +67,7 @@ export default function LoginScreen(props) {
           passwordInput.current.focus() // quando si fa "invio" sulla tastiera il focus viene spostato all'input successivo
         }}
         blurOnSubmit={false} // serve a non far chiudere la tastiera quando si fa focus tramite passwordInput.current.focus()
-        onTextChange={(text) => changeFormValue('username', text)}
+        onTextChange={(text) => setFormValue('username', text)}
         autoCapitalize='none'
         onBlur={() => {
           submitUsername()
@@ -75,12 +78,12 @@ export default function LoginScreen(props) {
         label="Password"
         ref={passwordInput}
         isPassword
-        onTextChange={(text) => changeFormValue('password', text)}
+        onTextChange={(text) => setFormValue('password', text)}
       />
       <Spacer size={5} />
       <Button
         title="Accedi"
-        disabled={!formValid}
+        disabled={!formData.valid}
         onPress={submitLogin}
       />
     </ScreenContainer>

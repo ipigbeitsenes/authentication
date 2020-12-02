@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState, forwardRef } from 'react'
 import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
-
+import colors from '../config/colors'
 /**
  * ref non può essere passata come prop
  * quindi dobbiamo utilizzare `forwardRef`, che la espone
@@ -73,7 +73,7 @@ const Input = forwardRef(({
           {
             backgroundColor: animation.interpolate({
               inputRange: [0, 1, 2], // i valori di Animated.Value, gestiti all'interno di useEffect
-              outputRange: ['red', 'green', 'yellow'] // il valore di translate basato sui valori di Animated.Value
+              outputRange: ['red', 'green', '#54aedb'] // il valore di translate basato sui valori di Animated.Value
             })
           }
         ]}
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     paddingTop: 20
   },
   input: {
+    backgroundColor: colors.BackgroundInput,
     height: 40,
     borderBottomWidth: 2,
     borderBottomColor: '#000'

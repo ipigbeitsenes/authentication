@@ -28,7 +28,7 @@ export default function Alert(props) {
     <>
       <Animated.View style={[styles.container, typologyContainerStyle, {
         transform: [{
-          scaleY: animation.interpolate({
+          scale: animation.interpolate({
             inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
             outputRange: [0, 1] // il valore di translate basato sui valori di Animated.Value
           })
@@ -36,7 +36,7 @@ export default function Alert(props) {
       }]}>
         <Text style={styles.message}>{props.message}</Text>
         {props.onClose && ( // stampo il bottone solo se la componente riceve la props onClose
-          <Button title="Chiudi" color={colors.white} onPress={props.onClose} />
+          <Button title="X" color={colors.black} onPress={props.onClose} />
         )}
       </Animated.View>
       <Spacer size={10} />
