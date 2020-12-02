@@ -6,13 +6,34 @@ import Spacer from '../components/Spacer'
 import Title from '../components/Title'
 import Button from '../components/Button'
 import useForm from '../hooks/useForm'
+import apis from '../config/apis'
 
 export default function SignupScreen(props) {
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
   const [formData, setFormValue] = useForm(requiredInputs)
+  const [requestRunning, setRequestRunning] = useState(false)
+  
 
   const submitSignup = () => {
-    console.log('Signup completed', formData)
+    // verifico che non ci siano altre richieste in corso
+    if (requestRunning) return
+
+    // imposto la richiesta come in corso
+    setRequestRunning(true)
+
+    // invio richiesta
+    fetch(`${apis.baseUrl}/authentication/signup-action`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData.values)
+    }).then((response) => {
+      return response.json()
+    }).then((response) => {
+      setRequestRunning(false)
+      console.log(response)
+    }).catch((e) => {
+      setRequestRunning(false)
+    })
   }
 
   return (
@@ -45,18 +66,18 @@ export default function SignupScreen(props) {
         />
         <Spacer size={10} />
         <Input
-          label="Password"
+          label="Password" 
           onTextChange={(text) => setFormValue('password', text)}
         />
         <Spacer size={10} />
         <Input
-          label="Conferma password"
+          label="Conferma password" 
           onTextChange={(text) => setFormValue('password_confirmation', text)}
         />
         <Spacer size={5} />
         <Button
           title="Registrati"
-          disabled={!formData.valid}
+          disabled={requestRunning || !formData.valid}
           onPress={submitSignup}
         />
       </ScreenContainer>

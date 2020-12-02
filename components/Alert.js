@@ -58,10 +58,10 @@ const styles = StyleSheet.create({
     borderRadius: 15
   },
   containerSuccess: {
-    backgroundColor: 'green'
+    backgroundColor: colors.green
   },
   containerDanger: {
-    backgroundColor: 'red'
+    backgroundColor: colors.red
   },
   message: {
     color: colors.white,

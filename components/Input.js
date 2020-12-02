@@ -43,7 +43,7 @@ const Input = forwardRef(({
       useNativeDriver: false
       // useNativeDriver: true // mettere `true` solamente se le proprietà che andremo ad animare sono `transform` e `opacity`
     }).start()
-  }, [focused])
+  }, [focused, text])
 
   // invio del contenuto dell'input al cambio di valore di text
   useEffect(() => {
@@ -70,10 +70,11 @@ const Input = forwardRef(({
       </Animated.View>
       <Animated.View
         style={[
+          styles.background,
           {
             backgroundColor: animation.interpolate({
               inputRange: [0, 1, 2], // i valori di Animated.Value, gestiti all'interno di useEffect
-              outputRange: ['red', 'green', '#54aedb'] // il valore di translate basato sui valori di Animated.Value
+              outputRange: [colors.grayLight, colors.gray, colors.green] // il valore di translate basato sui valori di Animated.Value
             })
           }
         ]}
@@ -92,7 +93,10 @@ const Input = forwardRef(({
           onChangeText={value => setText(value)}
           // onChangeText={setText} // stessa cosa che la riga sopra
           onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
+          onBlur={() => {
+            setFocused(false)
+            if (props.onBlurChange) props.onBlurChange()
+          }}
           secureTextEntry={isPassword}
           ref={ref}
           { ...props }
@@ -104,13 +108,13 @@ const Input = forwardRef(({
         style={{
           width: '100%',
           height: 2,
-          backgroundColor: '#0f0',
+          backgroundColor: colors.primary,
           position: 'absolute',
           bottom: 0,
           transform: [{
             scaleX: animation.interpolate({
               inputRange: [0, 1, 2],
-              outputRange: [0, 0.5, 1],
+              outputRange: [0, 1, 1],
             })
           }]
         }}
@@ -123,18 +127,24 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: 20
   },
+  background: {
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5
+  },
   input: {
     backgroundColor: colors.BackgroundInput,
     height: 40,
     borderBottomWidth: 2,
-    borderBottomColor: '#000'
+    borderBottomColor: colors.gray,
+    paddingHorizontal: 4
   },
   inputFocused: {
-    borderBottomColor: '#0f0'
+    borderBottomColor: colors.grayDark
   },
   labelContainer: {
     position: 'absolute',
-    top: 30
+    top: 30,
+    left: 4
   },
   label: {
     fontSize: 20,
@@ -185,5 +195,3 @@ export default Input
 // }
 
 // export default Input
-
-

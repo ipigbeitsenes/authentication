@@ -10,10 +10,17 @@ import useForm from '../hooks/useForm'
 const alertPropsDefault = { status: false, message: '', typology: 'success' }
 
 export default function LoginScreen(props) {
+<<<<<<< HEAD
   const requiredInputs = ['username', 'password']
   const [formData, setFormValue] = useForm(requiredInputs)
   const [alertProps, setAlertProps] = useState(alertPropsDefault)
   const passwordInput = useRef()
+=======
+  const [alertProps, setAlertProps] = useState(alertPropsDefault)
+  const passwordInput = useRef()
+  const requiredInputs = ['username', 'password']
+  const [formData, setFormValue] = useForm(requiredInputs)
+>>>>>>> master
 
   const submitLogin = () => {
     setAlertProps(true);
@@ -25,7 +32,10 @@ export default function LoginScreen(props) {
 
   // funzione che verifica se l'username è già utilizzato da altri utenti
   const submitUsername = () => {
+<<<<<<< HEAD
     console.log(formData)
+=======
+>>>>>>> master
     if (!formData.values.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
 
     setTimeout(() => { // finta chiamata alle API
@@ -36,6 +46,7 @@ export default function LoginScreen(props) {
     }, 500)
   }
 
+<<<<<<< HEAD
   // funzione che aggiorna il valore di un campo del form
   const changeFormValue = (name, value) => {
     setAlertProps(alertPropsDefault)
@@ -48,6 +59,8 @@ export default function LoginScreen(props) {
     setFormValue(requiredInputs.every((el) => notEmptyKeys.includes(el)))
   }
 
+=======
+>>>>>>> master
   // funzione che chiude l'alert senza modificare message e typology
   const closeAlert = () => {
     const newAlertProps = { ...alertProps }
@@ -69,7 +82,7 @@ export default function LoginScreen(props) {
         blurOnSubmit={false} // serve a non far chiudere la tastiera quando si fa focus tramite passwordInput.current.focus()
         onTextChange={(text) => setFormValue('username', text)}
         autoCapitalize='none'
-        onBlur={() => {
+        onBlurChange={() => {
           submitUsername()
         }}
       />
