@@ -8,8 +8,7 @@ const AuthStack = createStackNavigator()
 
 export default function AuthNavigator () {
   return (
-    <AuthStack.Navigator
-      initialRouteName="Welcome"
+    <AuthStack.Navigator initialRouteName="Welcome"
       screenOptions={{
         // headerShown: false
       }}
