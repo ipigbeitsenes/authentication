@@ -36,10 +36,25 @@ export default function SignupScreen(props) {
 
   return (
     <ScreenContainer>
-      <Title label="Login" centerText />
+      <Title label="Registrazione" centerText />
       <Spacer size={20} />
       <Input
         label="Username"
+        blurOnSubmit={false}
+        onTextChange={(text) => changeFormValue('username', text)}
+      />
+      <Input
+        label="Email"
+        blurOnSubmit={false}
+        onTextChange={(text) => changeFormValue('username', text)}
+      />
+      <Input
+        label="Name"
+        blurOnSubmit={false}
+        onTextChange={(text) => changeFormValue('username', text)}
+      />
+      <Input
+        label="Lastname"
         blurOnSubmit={false}
         onTextChange={(text) => changeFormValue('username', text)}
       />
