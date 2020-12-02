@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { ScrollView } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
 import Spacer from '../components/Spacer'
@@ -15,7 +16,8 @@ export default function SignupScreen(props) {
   }
 
   return (
-    <ScreenContainer>
+    <ScrollView>
+      <ScreenContainer>
       <Title label="Registrazione" centerText />
       <Spacer size={20} />
       <Input
@@ -57,6 +59,8 @@ export default function SignupScreen(props) {
         disabled={!formData.valid}
         onPress={submitSignup}
       />
-    </ScreenContainer>
+      </ScreenContainer>
+    </ScrollView>
+    
   )
 }
