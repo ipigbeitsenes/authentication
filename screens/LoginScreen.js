@@ -24,6 +24,7 @@ export default function LoginScreen(props) {
     }, 500)
   }
 
+  // funzione che verifica se l'username è già utilizzato da altri utenti
   const submitUsername = () => {
     if (!formValues.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
 
@@ -35,6 +36,7 @@ export default function LoginScreen(props) {
     }, 500)
   }
 
+  // funzione che aggiorna il valore di un campo del form
   const changeFormValue = (name, value) => {
     setAlertProps(alertPropsDefault)
 
@@ -51,7 +53,11 @@ export default function LoginScreen(props) {
     const newAlertProps = {...alertProps}
     newAlertProps.status = false
     setAlertProps(newAlertProps)
+<<<<<<< HEAD
   } 
+=======
+  }
+>>>>>>> master
 
   return (
     <ScreenContainer>
