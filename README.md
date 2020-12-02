@@ -67,6 +67,30 @@ Se non incotriamo conflitti il nostro lavoro è finito.
 In caso contrario dobbiamo prima risolverli e poi [pushare](#push) i file aggiornati.
 Per trovare facilmente i conflitti cercare globalmente nel progetto `<<<` tramite la lente di ingrandimento in alto a sinistra su VSCode.
 
+### Sincronizzazione a master
+
+```
+# eseguo push dei miei ultimi aggiornamenti
+git add -A
+git commit -m "Messaggio"
+git push origin nomeBranch
+
+# passo a branch master
+git checkout master
+
+# scarico ultimi aggiornamenti di master
+git pull origin master
+
+# torno sulla mia brach
+git checkout nomeBranch
+
+# eseguo il merge del codice proveniente da master
+git merge master
+
+# aggiorno la mia branch online
+git push origin nomeBranch
+```
+
 ## API
 ### Login
 **Endpoint**
