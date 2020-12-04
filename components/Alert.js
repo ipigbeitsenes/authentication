@@ -34,11 +34,11 @@ export default function Alert(props) {
 
   useEffect(() => {
     Animated.timing(animation, {
-      toValue: props.status ? 1 : 0,
+      toValue: props.open ? 1 : 0,
       duration: 500,
       useNativeDriver: true
     }).start()
-  }, [props.status])
+  }, [props.open])
 
   let typologyContainerStyle = styles.containerSuccess
   if (props.typology === 'danger') typologyContainerStyle = styles.containerDanger
@@ -53,7 +53,10 @@ export default function Alert(props) {
           })
         }],
       }]}>
-        <Text style={styles.message}>{props.message}</Text>
+        {
+          props.message && <Text style={styles.message}>{props.message}</Text>
+        }
+
         {props.onClose && ( // stampo il bottone solo se la componente riceve la props onClose
           <Button title="Chiudi" color={colors.white} onPress={props.onClose} />
         )}
