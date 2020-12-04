@@ -9,6 +9,7 @@ import useForm from '../hooks/useForm'
 import apis from '../config/apis'
 import useFetch from '../hooks/useFetch'
 import Alert from '../components/Alert'
+import { layoutStyles } from '../styles/Layout'
 
 const inputs = [
   { label: 'Username', name: 'username', ref: createRef() },
@@ -31,9 +32,7 @@ export default function SignupScreen(props) {
   const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/signup-action`, "POST")
 
   const [error, setError] = useState(false)
-
-  const mailRef = useRef()
-  const nameRef = useRef()
+  const [messageOpen, setMessageOpen] = useState(false)
 
   //setRequestRunning(formData.values)
   //.then((response) => {console.log(response)})
@@ -45,8 +44,17 @@ export default function SignupScreen(props) {
     // imposto la richiesta come in corso
     setRequestRunning({
       data: formData.values,
-      onSucces: console.log('sucessful signup'),
-      onFail: (err) => { setError(err) },
+      onSucces: () => {
+        /**
+         * Per il momento facciamo solo un log, poi quando saranno implementati sia
+         * signup che login faremo un redirect alla homepage
+         */
+        console.log('sucessful signup')
+      },
+      onFail: (err) => {
+        setError(err) // impostiamo il messaggio dell'Alert
+        setMessageOpen(true) // apriamo l'Alert
+      },
     })
 
     // invio richiesta
@@ -66,16 +74,28 @@ export default function SignupScreen(props) {
 
 
   return (
-    <ScrollView>
-      <ScreenContainer>
-        <Alert message={error || null}
-          open={!!error}
-          setOpen={setError}
-          typology={error ? 'danger' : 'success'}
+    <View style={{ flex: 1 }}>
+      <Alert
+        message={error}
+        open={messageOpen}
+        onClose={() => setMessageOpen(false)}
+        typology={error ? 'danger' : 'success'}
+      />
 
-        />
+      <ScrollView
+        /**
+         * `keyboardShouldPersistTaps="handled"`
+         * fa in modo che quando un input è in focus, se si clicca
+         * su un'altra parte dello schermo la tastiera venga chiusa
+        */
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false} // nasconde la scrollbar
+        contentContainerStyle={layoutStyles.container}
+        style={{ flexGrow: 1 }}
+      >
+        <Spacer size={10} />
         <Title label="Registrazione" centerText />
-        <Spacer size={20} />
+        <Spacer size={10} />
         {
           inputs.map(({ label, name, ref }, index) => {
             return (
@@ -83,20 +103,16 @@ export default function SignupScreen(props) {
                 <Input
                   ref={ref}
                   label={label}
-                  //blurOnSubmit={index < inputs.length-1 ? false : true} e uguale a sotto
+                  // blurOnSubmit={index < inputs.length-1 ? false : true} e uguale a sotto
                   blurOnSubmit={!(index < inputs.length - 1)}
-
                   onTextChange={(text) => setFormValue(name, text)}
-                  //passiamo focus da questo input a quello successivo con enter da tastiera
+                  // passiamo focus da questo input a quello successivo con enter da tastiera
                   onSubmitEditing={() => {
-                    //mailRef.current.focus()
-
                     const nextInput = inputs[index + 1]
 
                     if (nextInput) {
                       nextInput.ref.current.focus()
                     }
-
                   }}
                 />
                 <Spacer size={index < inputs.length - 1 ? 10 : 5} />
@@ -107,11 +123,12 @@ export default function SignupScreen(props) {
 
 
         <Button
-          title="Registrati"
           disabled={requestRunning || !formData.valid}
           onPress={submitSignup}
-        />
-      </ScreenContainer>
-    </ScrollView>
+        >Registrati</Button>
+
+        <Spacer size={10} />
+      </ScrollView>
+    </View>
   )
 }
