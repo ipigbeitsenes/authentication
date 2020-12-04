@@ -31,7 +31,7 @@ export default function SignupScreen(props) {
   const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/signup-action`, "POST")
 
   const [error, setError] = useState(false)
-  
+
   const mailRef = useRef()
   const nameRef = useRef()
 
@@ -46,7 +46,7 @@ export default function SignupScreen(props) {
     setRequestRunning({
       data: formData.values,
       onSucces: console.log('sucessful signup'),
-      onFail: (err) => {setError(err)},
+      onFail: (err) => { setError(err) },
     })
 
     // invio richiesta
@@ -68,7 +68,12 @@ export default function SignupScreen(props) {
   return (
     <ScrollView>
       <ScreenContainer>
-        <Alert message={error || null} open={!!error} setOpen={setError} typology={error? 'danger': 'success'}/>
+        <Alert message={error || null}
+          open={!!error}
+          setOpen={setError}
+          typology={error ? 'danger' : 'success'}
+
+        />
         <Title label="Registrazione" centerText />
         <Spacer size={20} />
         {
