@@ -1,3 +1,22 @@
+/*
+import React from 'react';
+import Spacer from "./Spacer.js";
+import Button from "./Button.js";
+import { Text, View } from 'react-native'
+export default function Alert(props) {
+    let color = "yellow";
+    if (props.typology == "danger") {
+        color = "red";
+    } else if (props.typology == "success") { color = "green" }
+    if (props.status) {
+        return <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%"}}>
+            <Text style={{ color: color }}>{props.message}</Text>
+            <Button title="X" onPress={props.onClose}/>
+
+        </View>
+    } else { return <Spacer syze={20} /> }
+}
+*/
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Animated, StyleSheet, View, Text } from 'react-native'
@@ -15,11 +34,11 @@ export default function Alert(props) {
 
   useEffect(() => {
     Animated.timing(animation, {
-      toValue: props.status ? 1 : 0,
+      toValue: props.open ? 1 : 0,
       duration: 500,
       useNativeDriver: true
     }).start()
-  }, [props.status])
+  }, [props.open])
 
   let typologyContainerStyle = styles.containerSuccess
   if (props.typology === 'danger') typologyContainerStyle = styles.containerDanger
@@ -34,7 +53,10 @@ export default function Alert(props) {
           })
         }],
       }]}>
-        <Text style={styles.message}>{props.message}</Text>
+        {
+          props.message && <Text style={styles.message}>{props.message}</Text>
+        }
+
         {props.onClose && ( // stampo il bottone solo se la componente riceve la props onClose
           <Button title="Chiudi" color={colors.white} onPress={props.onClose} />
         )}

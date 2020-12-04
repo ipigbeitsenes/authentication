@@ -54,6 +54,10 @@ const Input = forwardRef(({
   return (
     <View style={[styles.container, containerStyle]}>
       <Animated.View
+      
+        //rende cliccabile l'input anche nel placeholder
+        pointerEvents='none'
+
         style={[
           styles.labelContainer,
           {
