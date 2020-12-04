@@ -53,6 +53,8 @@ const Input = forwardRef(({
   return (
     <View style={[styles.container, containerStyle]}>
       <Animated.View
+      //Rende cliccabile il testo del placeholder
+      pointerEvents="none"
         style={[
           styles.labelContainer,
           {
