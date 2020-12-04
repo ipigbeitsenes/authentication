@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { createRef, useState } from 'react'
 import { ScrollView } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
@@ -7,6 +7,17 @@ import Title from '../components/Title'
 import Button from '../components/Button'
 import useForm from '../hooks/useForm'
 import apis from '../config/apis'
+
+const inputs =[
+  {label: 'Username', name:'username', ref:createRef()},
+  {label: 'Email', name:'email', ref:createRef()},
+  {label: 'Name', name:'name', ref:createRef()},
+  {label: 'Surname', name:'surname', ref:createRef()},
+  {label: 'Password', name:'password', ref:createRef()},
+  {label: 'ConfirmPassword', name:'confirmpassword', ref:createRef()},
+  {label: 'Username', name:'username', ref:createRef()},
+
+]
 
 export default function SignupScreen(props) {
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
@@ -40,13 +51,33 @@ export default function SignupScreen(props) {
       <ScreenContainer>
         <Title label="Registrazione" centerText />
         <Spacer size={20} />
+        {
+          inputs.map((input) => {
+            return (
+              <Input
+                label={label}
+                blurOnSubmit={index}
+                onTextChange={(text) => setFormValue('username', text)}
+                onSubmitEditing={() => {
+                  //mailRef.current.focus()
+                  const nextInput = inputs [index +1]
+
+                  if(nextInput){
+                    nextInput.ref.current.focus()
+                  }
+                }
+                }
+            }
+          )
         <Input
           label="Username"
           blurOnSubmit={false}
           onTextChange={(text) => setFormValue('username', text)}
+          onSubmitEditing={() => mailRef.current.focus()}
         />
         <Spacer size={10} />
-        <Input
+        {/* <Input
+          ref={mailRef}
           label="Email"
           blurOnSubmit={false}
           onTextChange={(text) => setFormValue('email', text)}
@@ -73,7 +104,7 @@ export default function SignupScreen(props) {
           label="Conferma password" 
           onTextChange={(text) => setFormValue('password_confirmation', text)}
         />
-        <Spacer size={5} />
+        <Spacer size={5} /> */}
         <Button
           title="Registrati"
           disabled={requestRunning || !formData.valid}
