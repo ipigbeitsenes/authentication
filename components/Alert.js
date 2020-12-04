@@ -23,25 +23,26 @@ import { Animated, StyleSheet, View, Text } from 'react-native'
 import Button from './Button'
 import Spacer from './Spacer'
 import colors from '../config/colors'
+import sizes from '../config/sizes'
 
 // COMPONENT CODE
 /////////////////////////////////////////////////////////////////////
 
-export default function Alert(props) {
+export default function Alert({message, typology, onClose, open}) {
   // if (!props.status) return null
 
   const animation = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
     Animated.timing(animation, {
-      toValue: props.open ? 1 : 0,
+      toValue: open ? 1 : 0,
       duration: 500,
       useNativeDriver: true
     }).start()
-  }, [props.open])
+  }, [open])
 
   let typologyContainerStyle = styles.containerSuccess
-  if (props.typology === 'danger') typologyContainerStyle = styles.containerDanger
+  if (typology === 'danger') typologyContainerStyle = styles.containerDanger
 
   return (
     <>
@@ -58,7 +59,7 @@ export default function Alert(props) {
         }
 
         {props.onClose && ( // stampo il bottone solo se la componente riceve la props onClose
-          <Button title="Chiudi" color={colors.white} onPress={props.onClose} />
+          <Button  color={colors.white} onPress={props.onClose} >Close</Button>
         )}
       </Animated.View>
       <Spacer size={10} />
@@ -71,11 +72,15 @@ export default function Alert(props) {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
+    position: 'absolute',
+    top: 0,
+    left: sizes.containerSpace,
     backgroundColor: 'red',
     padding: 15,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent:'space-between',
     alignItems: 'center',
     borderRadius: 15
   },
@@ -95,7 +100,7 @@ const styles = StyleSheet.create({
 // COMPONENT PROPS
 /////////////////////////////////////////////////////////////////////
 
-Alert.propTypes = {
+/* Alert.propTypes = {
   status: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   typology: PropTypes.oneOf(['success', 'danger']),
@@ -104,4 +109,4 @@ Alert.propTypes = {
 
 Alert.defaultProps = {
   typology: 'success'
-}
+} */

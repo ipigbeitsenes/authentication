@@ -66,14 +66,17 @@ export default function SignupScreen(props) {
 
 
   return (
-    <ScrollView>
-      <ScreenContainer>
-        <Alert message={error || null}
-          open={!!error}
-          setOpen={setError}
-          typology={error ? 'danger' : 'success'}
 
-        />
+    <ScreenContainer>
+
+      <Alert message={error || null}
+        open={!!error}
+        setOpen={setError}
+        typology={error ? 'danger' : 'success'}
+      />
+
+      <ScrollView showsVerticalScrollIndicator={false}>
+
         <Title label="Registrazione" centerText />
         <Spacer size={20} />
         {
@@ -111,7 +114,8 @@ export default function SignupScreen(props) {
           disabled={requestRunning || !formData.valid}
           onPress={submitSignup}
         />
-      </ScreenContainer>
-    </ScrollView>
+
+      </ScrollView>
+    </ScreenContainer>
   )
 }
