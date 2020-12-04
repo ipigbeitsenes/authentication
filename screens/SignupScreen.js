@@ -11,9 +11,11 @@ import apis from '../config/apis'
 export default function SignupScreen(props) {
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
   const [formData, setFormValue] = useForm(requiredInputs)
-  const [requestRunning, setRequestRunning] = useState(false)
-
-  const submitSignup = () => {
+  //const [requestRunning, setRequestRunning] = useState(false)
+  const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/signup-action`,"POST")
+  setRequestRunning(formData.values)
+  .then((response) => {console.log(response)})
+  /*const submitSignup = () => {
     // verifico che non ci siano altre richieste in corso
     if (requestRunning) return
 
@@ -33,7 +35,7 @@ export default function SignupScreen(props) {
     }).catch((e) => {
       setRequestRunning(false)
     })
-  }
+  }*/
 
   return (
     <ScrollView>
