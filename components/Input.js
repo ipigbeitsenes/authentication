@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
+import colors from '../config/colors'
 
 const Input = ({
     containerStyle,
