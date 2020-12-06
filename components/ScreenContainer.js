@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     paddingTop: sizes.statusBarHeight,
     paddingBottom: 60,
     paddingHorizontal: sizes.containerSpace,
+    paddingHorizontal: sizes.containerSpace
   }
 })
 
