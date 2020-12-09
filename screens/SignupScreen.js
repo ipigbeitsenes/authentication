@@ -38,6 +38,7 @@ export default function SignupScreen(props) {
   //.then((response) => {console.log(response)})
 
   const submitSignup = () => {
+
     // verifico che non ci siano altre richieste in corso
     if (requestRunning) return
 
@@ -114,6 +115,7 @@ export default function SignupScreen(props) {
                       nextInput.ref.current.focus()
                     }
                   }}
+                  secureTextEntry={inputs[index].name == 'password' || 'password_confirmation' ? true : false}
                 />
                 <Spacer size={index < inputs.length - 1 ? 10 : 5} />
               </View>
