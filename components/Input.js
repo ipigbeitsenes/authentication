@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+// <<<<<< HEAD
 import React from 'react'
 
 const Input = () =>{
@@ -8,7 +8,7 @@ return(
 )
 }
 export default Input;
-=======
+// =======
 import React, { useRef, useEffect, useState, forwardRef } from 'react'
 import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 import colors from '../config/colors'
@@ -208,4 +208,4 @@ export default Input
 // export default Input
 
 
->>>>>>> master
+// >>>>>>> master
