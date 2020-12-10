@@ -35,8 +35,6 @@ export default function LoginScreen(props) {
 
     //if (requestRunning) return // verifico che non ci siano altre richieste in corso
 
-    if (requestRunning) return
-
     setRequestRunning({
       data: formData.values,
       onSucces: () => {
@@ -56,7 +54,6 @@ export default function LoginScreen(props) {
   //   setAlertProps(newAlertProps)
   // }
 
-  console.log(inputs)
   return (
     <View style={{ flex: 1 }}>
       <Alert
@@ -74,12 +71,13 @@ export default function LoginScreen(props) {
         <Spacer size={10} />
         <Title label="Login" centerText />
         <Spacer size={10} />
-        <Forms ></Forms>
 
-          <Button
-            disabled={requestRunning || !formData.valid}
-            onPress={submitLogin}
-          >Accedi</Button>
+        <Forms inputs={inputs} onTextChange={(name, text) => setFormValue(name, text)}></Forms>
+
+        <Button
+          disabled={requestRunning || !formData.valid}
+          onPress={submitLogin}
+        >Accedi</Button>
 
       </ScrollView>
 

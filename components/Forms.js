@@ -1,20 +1,16 @@
 import React, { useRef, useEffect } from 'react'
 import Input from './Input'
-import { View } from 'react'
+import { View } from 'react-native'
 import Spacer from './Spacer'
 
-export default function Forms() {
+export default function Forms({inputs, onTextChange}) {
 
-return (
-    <View>
-        
-    </View>
-)
-   /* return (
+
+    return (
         <>
             {
 
-                inputs.map(({ label, name, ref }, index) => {
+               inputs.map(({ label, name, ref }, index) => {
                     return (
                         <View key={index}>
                             <Input
@@ -41,9 +37,11 @@ return (
 
 
             }
+
         </>
+
     )
-    */
+
 
 }
 

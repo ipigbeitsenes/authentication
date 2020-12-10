@@ -39,9 +39,6 @@ export default function SignupScreen(props) {
 
   const submitSignup = () => {
 
-    // verifico che non ci siano altre richieste in corso
-    if (requestRunning) return
-
     // imposto la richiesta come in corso
     setRequestRunning({
       data: formData.values,
