@@ -8,7 +8,7 @@ export default function useForm(requiredInputs) {
   const [formValues, setFormValues] = useState({})
   const [formValid, setFormValid] = useState(false)
 
-  const setFormValue = (name, value) => {
+  const setFormValues = (name, value) => {
     const newFormValues = {...formValues}
     newFormValues[name] = value
     setFormValues(newFormValues)

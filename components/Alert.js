@@ -8,7 +8,7 @@ export default function Alert(props) {
     if (props.typology == "danger") {
         color = "red";
     } else if (props.typology == "success") { color = "green" }
-    if (props.status) {
+    if (status) {
         return <View style={{flexDirection:"row", justifyContent:"space-between", width:"100%"}}>
             <Text style={{ color: color }}>{props.message}</Text>
             <Button title="X" onPress={props.onClose}/>
@@ -28,9 +28,18 @@ import sizes from '../config/sizes'
 // COMPONENT CODE
 /////////////////////////////////////////////////////////////////////
 
-export default function Alert({message, typology, onClose, open}) {
-  // if (!props.status) return null
-
+/**
+ * Scrivere le props tramite il destructuring ci permette di impostare
+ * dei valori di default e di non dovere scrivere `props.nomeProp`, ma solo `nomeProp`
+ * in giro per il componente.
+ * https://developer.mozilla.org/it/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+ */
+export default function Alert({
+  open,
+  onClose,
+  message = null, // questo campo è null di default, a meno che non si passi un altro valore tramite la prop `message`
+  typology
+}) {
   const animation = useRef(new Animated.Value(0)).current
 
   useEffect(() => {
@@ -41,29 +50,25 @@ export default function Alert({message, typology, onClose, open}) {
     }).start()
   }, [open])
 
-  let typologyContainerStyle = styles.containerSuccess
-  if (typology === 'danger') typologyContainerStyle = styles.containerDanger
+  let typologyContainerStyle = typology === "danger" ? styles.containerDanger : styles.containerSuccess
 
   return (
-    <>
-      <Animated.View style={[styles.container, typologyContainerStyle, {
-        transform: [{
-          scale: animation.interpolate({
-            inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
-            outputRange: [0, 1] // il valore di translate basato sui valori di Animated.Value
-          })
-        }],
-      }]}>
-        {
-          props.message && <Text style={styles.message}>{props.message}</Text>
-        }
+    <Animated.View style={[styles.container, typologyContainerStyle, {
+      transform: [{
+        scale: animation.interpolate({
+          inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
+          outputRange: [0, 1] // il valore di scale basato sui valori di Animated.Value
+        })
+      }],
+    }]}>
+      {
+        message && <Text style={styles.message}>{message}</Text>
+      }
 
-        {props.onClose && ( // stampo il bottone solo se la componente riceve la props onClose
-          <Button  color={colors.white} onPress={props.onClose} >Close</Button>
-        )}
-      </Animated.View>
-      <Spacer size={10} />
-    </>
+      {onClose && ( // stampo il bottone solo se la componente riceve la props onClose
+        <Button color={colors.black} onPress={onClose}>Close</Button>
+      )}
+    </Animated.View>
   )
 }
 
@@ -75,7 +80,8 @@ const styles = StyleSheet.create({
     width: '100%',
     position: 'absolute',
     top: 0,
-    left: sizes.containerSpace,
+    left: 0,
+    zIndex: 1,
     backgroundColor: 'red',
     padding: 15,
     display: 'flex',
@@ -100,13 +106,13 @@ const styles = StyleSheet.create({
 // COMPONENT PROPS
 /////////////////////////////////////////////////////////////////////
 
-/* Alert.propTypes = {
-  status: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  typology: PropTypes.oneOf(['success', 'danger']),
-  onClose: PropTypes.func
-}
+// Alert.propTypes = {
+//   status: PropTypes.bool.isRequired,
+//   message: PropTypes.string.isRequired,
+//   typology: PropTypes.oneOf(['success', 'danger']),
+//   onClose: PropTypes.func
+// }
 
-Alert.defaultProps = {
-  typology: 'success'
-} */
+// Alert.defaultProps = {
+//   typology: 'success'
+// }
