@@ -10,10 +10,11 @@ import useForm from '../hooks/useForm'
 import { layoutStyles } from '../styles/Layout'
 import useFetch from '../hooks/useFetch'
 import apis from '../config/apis'
+import Forms from '../components/Forms'
 
 const inputs = [
   { label: 'Username', name: 'username_email', ref: createRef() },
-  { label: 'Password', name: 'password', ref: createRef() }
+  { label: 'Password', type: 'password', name: 'password', ref: createRef() }
 ]
 
 export default function LoginScreen(props) {
@@ -55,6 +56,7 @@ export default function LoginScreen(props) {
   //   setAlertProps(newAlertProps)
   // }
 
+  console.log(inputs)
   return (
     <View style={{ flex: 1 }}>
       <Alert
@@ -72,38 +74,12 @@ export default function LoginScreen(props) {
         <Spacer size={10} />
         <Title label="Login" centerText />
         <Spacer size={10} />
-        {
-          inputs.map(({ label, name, ref }, index) => {
-            return (
-              <View key={index}>
-                <Input
+        <Forms ></Forms>
 
-                  ref={ref}
-                  label={label}
-                  blurOnSubmit={!(index < inputs.length - 1)}
-                  onTextChange={(text) => setFormValue(name, text)}
-                  onSubmitEditing={() => {
-                    const nextInput = inputs[index + 1]
-
-                    if (nextInput) {
-                      nextInput.ref.current.focus()
-                    }
-
-                  }}
-                  secureTextEntry={inputs[index].name == 'password' ? true : false}
-                />
-                <Spacer size={index < inputs.length - 1 ? 10 : 5} />
-              </View>
-
-            )
-
-          })
-        }
-
-        <Button
-          disabled={requestRunning || !formData.valid}
-          onPress={submitLogin}
-        >Accedi</Button>
+          <Button
+            disabled={requestRunning || !formData.valid}
+            onPress={submitLogin}
+          >Accedi</Button>
 
       </ScrollView>
 

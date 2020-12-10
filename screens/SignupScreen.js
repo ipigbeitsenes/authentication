@@ -14,8 +14,8 @@ import { layoutStyles } from '../styles/Layout'
 const inputs = [
   { label: 'Username', name: 'username', ref: createRef() },
   { label: 'Email', name: 'email', ref: createRef() },
-  { label: 'Password', name: 'password', ref: createRef() },
-  { label: 'Confirm Password', name: 'password_confirmation', ref: createRef() },
+  { label: 'Password', type: 'password', name: 'password', ref: createRef() },
+  { label: 'Confirm Password', type: 'password', name: 'password_confirmation', ref: createRef() },
   { label: 'Name', name: 'name', ref: createRef() },
   { label: 'Surname', name: 'surname', ref: createRef() },
 ]
@@ -104,7 +104,7 @@ export default function SignupScreen(props) {
                 <Input
                   ref={ref}
                   label={label}
-                  // blurOnSubmit={index < inputs.length-1 ? false : true} e uguale a sotto
+                  // blurOnSubmit={index < inputs.length - 1 ? false : true} e uguale a sotto
                   blurOnSubmit={!(index < inputs.length - 1)}
                   onTextChange={(text) => setFormValue(name, text)}
                   // passiamo focus da questo input a quello successivo con enter da tastiera
@@ -115,7 +115,7 @@ export default function SignupScreen(props) {
                       nextInput.ref.current.focus()
                     }
                   }}
-                  secureTextEntry={inputs[index].name == 'password' || 'password_confirmation' ? true : false}
+                  secureTextEntry={inputs[index].type == 'password' ? true : false}
                 />
                 <Spacer size={index < inputs.length - 1 ? 10 : 5} />
               </View>

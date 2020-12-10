@@ -53,22 +53,24 @@ export default function Alert({
   let typologyContainerStyle = typology === "danger" ? styles.containerDanger : styles.containerSuccess
 
   return (
-    <Animated.View style={[styles.container, typologyContainerStyle, {
-      transform: [{
-        scale: animation.interpolate({
-          inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
-          outputRange: [0, 1] // il valore di scale basato sui valori di Animated.Value
-        })
-      }],
-    }]}>
-      {
-        message && <Text style={styles.message}>{message}</Text>
-      }
+    <View style={[styles.container, typologyContainerStyle]}>
+      <Animated.View style={[styles.containerInternal, typologyContainerStyle, {
+        transform: [{
+          scale: animation.interpolate({
+            inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
+            outputRange: [0, 1] // il valore di scale basato sui valori di Animated.Value
+          })
+        }],
+      }]}>
+        {
+          message && <Text style={styles.message}>{message}</Text>
+        }
+        {onClose && ( // stampo il bottone solo se la componente riceve la props onClose
+          <Button color={colors.black} onPress={onClose}>Close</Button>
+        )}
+      </Animated.View>
+    </View>
 
-      {onClose && ( // stampo il bottone solo se la componente riceve la props onClose
-        <Button color={colors.black} onPress={onClose}>Close</Button>
-      )}
-    </Animated.View>
   )
 }
 
@@ -77,11 +79,14 @@ export default function Alert({
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: sizes.containerSpace,
     width: '100%',
     position: 'absolute',
     top: 0,
     left: 0,
     zIndex: 1,
+  },
+  containerInternal: {
     backgroundColor: 'red',
     padding: 15,
     display: 'flex',
