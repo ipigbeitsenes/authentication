@@ -12,8 +12,6 @@ import useFetch from '../hooks/useFetch'
 import { layoutStyles } from '../styles/Layout'
 import apis from '../config/apis'
 
-const alertPropsDefault = { status: false, message: '', typology: 'success' }
-
 const inputs = [
   { label: 'Username', name: 'username_email', ref: createRef(), autoCapitalize: 'none' },
   { label: 'Password', name: 'password', ref: createRef(), secureTextEntry: true },

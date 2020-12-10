@@ -4,20 +4,20 @@ import { View } from 'react-native'
 import Input from './Input'
 import Spacer from './Spacer'
 
-export default function Form(props) {
+export default function Form({ inputs, updateInputValue }) {
   return (
     <>
       {
-        props.inputs.map(({ label, name, ref, autoCapitalize, secureTextEntry }, index) => {
+        inputs.map(({ label, name, ref, autoCapitalize, secureTextEntry }, index) => {
           return (
             <View key={index}>
               <Input
                 ref={ref}
                 label={label}
-                blurOnSubmit={!(index < props.inputs.length - 1)}
-                onTextChange={(text) => props.updateInputValue(name, text)}
+                blurOnSubmit={!(index < inputs.length - 1)}
+                onTextChange={(text) => updateInputValue(name, text)}
                 onSubmitEditing={() => {
-                  const nextInput = props.inputs[index + 1]
+                  const nextInput = inputs[index + 1]
 
                   if (nextInput) {
                     nextInput.ref.current.focus()
@@ -26,7 +26,7 @@ export default function Form(props) {
                 autoCapitalize={autoCapitalize}
                 secureTextEntry={secureTextEntry}
               />
-              <Spacer size={index < props.inputs.length - 1 ? 10 : 5} />
+              <Spacer size={index < inputs.length - 1 ? 10 : 5} />
             </View>
           )
         })
