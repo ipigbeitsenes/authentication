@@ -34,13 +34,10 @@ export default function SignupScreen(props) {
   const [messageOpen, setMessageOpen] = useState(false)
 
   const submitSignup = () => {
-    // verifico che non ci siano altre richieste in corso
-    if (requestRunning) return
-
     // imposto la richiesta come in corso
     setRequestRunning({
       data: formData.values,
-      onSucces: () => {
+      onSuccess: () => {
         /**
          * Per il momento facciamo solo un log, poi quando saranno implementati sia
          * signup che login faremo un redirect alla homepage
@@ -80,8 +77,7 @@ export default function SignupScreen(props) {
         <Title label="Registrazione" centerText />
         <Spacer size={10} />
 
-
-        <Form inputs={inputs} updateInputValue={setFormValue} />
+        <Form inputs={inputs} updateInputValue={(name, text) => setFormValue(name, text)} />
 
         <Button
           disabled={requestRunning || !formData.valid}

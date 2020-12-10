@@ -1,4 +1,4 @@
-import React, { useRef, useState, createRef } from 'react'
+import React, { useContext, useState, createRef } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
@@ -9,11 +9,12 @@ import Button from '../components/Button'
 import Alert from '../components/Alert'
 import useForm from '../hooks/useForm'
 import useFetch from '../hooks/useFetch'
+import { AuthContext } from '../contexts/AuthContext'
 import { layoutStyles } from '../styles/Layout'
 import apis from '../config/apis'
 
 const inputs = [
-  { label: 'Username', name: 'username_email', ref: createRef(), autoCapitalize: 'none' },
+  { label: 'Email', name: 'username_email', ref: createRef(), autoCapitalize: 'none' },
   { label: 'Password', name: 'password', ref: createRef(), secureTextEntry: true },
 ]
 
@@ -23,20 +24,14 @@ export default function LoginScreen(props) {
   const [error, setError] = useState(false)
   const [messageOpen, setMessageOpen] = useState(false)
   const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
+  const { manageUserData } = useContext(AuthContext)
 
   const submitLogin = () => {
-    // verifico che non ci siano altre richieste in corso
-    if (requestRunning) return
-
     // imposto la richiesta come in corso
     setRequestRunning({
       data: formData.values,
-      onSucces: () => {
-        /**
-         * Per il momento facciamo solo un log, poi quando saranno implementati sia
-         * signup che login faremo un redirect alla homepage
-         */
-        console.log('sucessful login')
+      onSuccess: (payload) => {
+        manageUserData(payload)
       },
       onFail: (err) => {
         console.log(err)
