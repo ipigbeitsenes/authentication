@@ -12,6 +12,7 @@ export default function AuthNavigator () {
       initialRouteName="Welcome"
       screenOptions={{
         // headerShown: false
+        cardStyle: { paddingTop: 0 }
       }}
     >
       <AuthStack.Screen name="Welcome" component={WelcomeScreen} />
