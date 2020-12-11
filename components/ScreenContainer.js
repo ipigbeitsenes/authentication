@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: sizes.statusBarHeight,
-    paddingBottom: 30,
-    paddingHorizontal: 30
+    paddingBottom: 60,
+    paddingHorizontal: sizes.containerSpace
   }
 })
 
