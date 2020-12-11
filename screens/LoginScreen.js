@@ -1,7 +1,11 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useContext, useState, createRef } from 'react'
 =======
 import React, { createRef, useRef, useState } from 'react'
+>>>>>>> salvatoreTelesco
+=======
+import React, { useContext, useState, createRef } from 'react'
 >>>>>>> salvatoreTelesco
 import { ScrollView, Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
@@ -16,132 +20,99 @@ import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../contexts/AuthContext'
 import { layoutStyles } from '../styles/Layout'
 import apis from '../config/apis'
+import api from '../Utility/api'
+import { rootNavigation } from '../App'
 
 const inputs = [
-  { label: 'Email', name: 'username_email', ref: createRef(), autoCapitalize: 'none' },
+  { label: 'Username', name: 'username_email', ref: createRef() },
   { label: 'Password', name: 'password', ref: createRef(), secureTextEntry: true },
 ]
 
-export default function LoginScreen(props) {
+export default function LoginScreen({ navigation, route }) {
   const requiredInputs = ['username_email', 'password']
   const [formData, setFormValue] = useForm(requiredInputs)
   const [error, setError] = useState(false)
   const [messageOpen, setMessageOpen] = useState(false)
-  const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
+  //const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
   const { manageUserData } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
 
-
-  const [error, setError] = useState(false)
-  const [messageOpen, setMessageOpen] = useState(false)
-
-  const submitLogin = () => {
-<<<<<<< HEAD
-    // imposto la richiesta come in corso
-    setRequestRunning({
-      data: formData.values,
-      onSuccess: (payload) => {
+  const submitLogin = async () => {
+    try {
+      setLoading(true)
+      const response = await api('authentication/login-action', formData.values)
+      const { result, errors, payload } = response
+      if (result) {
         manageUserData(payload)
-      },
-      onFail: (err) => {
-        console.log(err)
-        setError(err) // impostiamo il messaggio dell'Alert
-        setMessageOpen(true) // apriamo l'Alert
-      },
-    })
+        //navigation.navigate('Dashboard')
+        rootNavigation.current.navigate('MainNavigator')
+      } else {
+        setError(errors[0].message)
+        setMessageOpen(true)
+      }
+
+    } catch (err) {
+      console.warn(err)
+      setError(err)
+      setMessageOpen(true)
+
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <>
-    <Alert open={messageOpen} message={error} onClose={() => setMessageOpen()} typology={error ? 'danger' : 'success'} />
-    <View style={layoutStyles.container}>
-      
-=======
+      <Alert open={messageOpen} message={error} onClose={() => setMessageOpen()} typology={error ? 'danger' : 'success'} />
+      <View style={layoutStyles.container}>
 
-    // funzione che verifica se l'username è già utilizzato da altri utenti
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false} // nasconde la scrollbar
+          contentContainerStyle={layoutStyles.container}
+          style={{ flexGrow: 1 }}>
 
-    //if (!formData.values.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
+          <Spacer size={10} />
+          <Title label="Login" centerText />
+          <Spacer size={10} />
 
-    //if (requestRunning) return // verifico che non ci siano altre richieste in corso
+          <Form inputs={inputs} updateInputValue={setFormValue} />
 
-    if (requestRunning) return
+          {
+            inputs.map(({ label, name, ref }, index) => {
+              return (
+                <View key={index}>
+                  <Input
 
-    setRequestRunning({
-      data: formData.values,
-      onSucces: () => {
-        console.log('sucessful login')
-      },
-      onFail: (err) => {
-        setError(err) // impostiamo il messaggio dell'Alert
-        setMessageOpen(true) // apriamo l'Alert
-      }
-    })
-  }
+                    ref={ref}
+                    label={label}
+                    blurOnSubmit={!(index < inputs.length - 1)}
+                    onTextChange={(text) => setFormValue(name, text)}
+                    onSubmitEditing={() => {
+                      const nextInput = inputs[index + 1]
 
-  // funzione che chiude l'alert senza modificare message e typology
-  // const closeAlert = () => {
-  //   const newAlertProps = {...alertProps}
-  //   newAlertProps.status = false
-  //   setAlertProps(newAlertProps)
-  // }
+                      if (nextInput) {
+                        nextInput.ref.current.focus()
+                      }
 
-  return (
-    <View style={{ flex: 1 }}>
-      <Alert
-        message={error}
-        open={messageOpen}
-        onClose={() => setMessageOpen(false)}
-        typology={error ? 'danger' : 'success'} />
->>>>>>> salvatoreTelesco
+                    }}
+                    secureTextEntry={inputs[index].name == 'password' ? true : false}
+                  />
+                  <Spacer size={index < inputs.length - 1 ? 10 : 5} />
+                </View>
 
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false} // nasconde la scrollbar
-        contentContainerStyle={layoutStyles.container}
-        style={{ flexGrow: 1 }}>
+              )
 
-        <Spacer size={10} />
-        <Title label="Login" centerText />
-        <Spacer size={10} />
-<<<<<<< HEAD
-        <Form inputs={inputs} updateInputValue={setFormValue} />
-=======
-        {
-          inputs.map(({ label, name, ref }, index) => {
-            return (
-              <View key={index}>
-                <Input
+            })
+          }
 
-                  ref={ref}
-                  label={label}
-                  blurOnSubmit={!(index < inputs.length - 1)}
-                  onTextChange={(text) => setFormValue(name, text)}
-                  onSubmitEditing={() => {
-                    const nextInput = inputs[index + 1]
+          <Button
+            disabled={requestRunning || !formData.valid}
+            onPress={submitLogin}
+          >Accedi</Button>
 
-                    if (nextInput) {
-                      nextInput.ref.current.focus()
-                    }
+        </ScrollView>
 
-                  }}
-                  secureTextEntry={inputs[index].name == 'password' ? true : false}
-                />
-                <Spacer size={index < inputs.length - 1 ? 10 : 5} />
-              </View>
-
-            )
-
-          })
-        }
-
->>>>>>> salvatoreTelesco
-        <Button
-          disabled={requestRunning || !formData.valid}
-          onPress={submitLogin}
-        >Accedi</Button>
-
-      </ScrollView>
-
-      <Spacer size={10} />
     </View>
     </>
   )

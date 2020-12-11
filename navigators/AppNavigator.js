@@ -6,21 +6,21 @@ import { AuthContext } from '../contexts/AuthContext'
 
 const AppStack = createStackNavigator()
 
-export default function AppNavigator () {
-  const { userToken } = useContext(AuthContext)
-  console.log(userToken)
+export default function AppNavigator() {
+    const { user } = useContext(AuthContext)
+    console.log(user)
 
-  return (
-    <AppStack.Navigator
-      initialRouteName={userToken.length ? "MainNavigator" : "AuthNavigator"}
-      screenOptions={{
-        // headerShown: false
-        cardStyle: { paddingTop: 0 }
-      }}
-    >
-      <AppStack.Screen name="AuthNavigator" component={AuthNavigator} />
-      <AppStack.Screen name="MainNavigator" component={MainNavigator} />
+    return (
+        <AppStack.Navigator
+            initialRouteName={user ? "MainNavigator" : "AuthNavigator"}
+            screenOptions={{
+                headerShown: false,
+                cardStyle: { paddingTop: 0 },
+            }}
+        >
+            <AppStack.Screen name="AuthNavigator" component={AuthNavigator} />
+            <AppStack.Screen name="MainNavigator" component={MainNavigator} />
 
-    </AppStack.Navigator>
-  )
+        </AppStack.Navigator>
+    )
 }

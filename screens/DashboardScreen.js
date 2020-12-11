@@ -7,11 +7,11 @@ import Spacer from '../components/Spacer'
 import { layoutStyles } from '../styles/Layout'
 
 export default function DashboardScreen(props) {
-  return (
-    <View style={layoutStyles.container}>
-      <Spacer size={10} />
-      <Title label="Schermata per utente loggato" centerText />
-      <Spacer size={20} />
-    </View>
-  )
+    return (
+        <View style={layoutStyles.container}>
+            <Spacer size={10} />
+            <Title label="Schermata per utente loggato" centerText />
+            <Spacer size={20} />
+        </View>
+    )
 }

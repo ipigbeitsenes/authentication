@@ -13,7 +13,7 @@ const Input = forwardRef(({
   inputStyle,
   isPassword,
   label = 'Placeholder',
-  onTextChange = () => {},
+  onTextChange = () => { },
   ...props // props native di TextInput
 }, ref) => {
   const [text, setText] = useState('')
@@ -53,7 +53,7 @@ const Input = forwardRef(({
   return (
     <View style={[styles.container, containerStyle]}>
       <Animated.View
-      
+
         //rende cliccabile l'input anche nel placeholder
         pointerEvents='none'
 
@@ -103,7 +103,7 @@ const Input = forwardRef(({
           }}
           secureTextEntry={isPassword}
           ref={ref}
-          { ...props }
+          {...props}
         />
       </Animated.View>
 

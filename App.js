@@ -8,7 +8,7 @@
 
 // export default function App() {
 //   const passwordInput = useRef() // ci serve per fare focus sull'input in cui la applichiamo
-  
+
 //   return (
 //     <ScreenContainer style={layoutStyles.container}>
 //       <StatusBar backgroundColor="transparent" />
@@ -39,17 +39,19 @@
 //   },
 // })
 
-import React from 'react'
+import React, { createRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthProvider } from './contexts/AuthContext'
 import AppNavigator from './navigators/AppNavigator'
 
+export const rootNavigation = createRef()
+
 export default function App() {
   return (
     <AuthProvider>
-      <NavigationContainer>
+      <NavigationContainer ref={rootNavigation}>
         <AppNavigator />
       </NavigationContainer>
-    </AuthProvider>
+    </AuthProvider >
   )
 }

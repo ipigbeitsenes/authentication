@@ -1,18 +1,23 @@
 import React, { createContext, useState } from 'react'
+import { setToken } from '../Utility/api'
+import AsyncStorage from '@react-native-community/async-storage'
 
 export const AuthContext = createContext()
 
-export function AuthProvider (props) {
-  const [userToken, setUserToken] = useState('')
-  const [userName, setUserName] = useState('')
+export function AuthProvider(props) {
 
-  const manageUserData = (userData) => {
+  const [user, setUser] = useState()
+
+  const manageUserData = async (userData) => {
     console.log(userData)
-    setUserToken(userData.token)
+    setUser(userData.user)
+    setToken(userData.token)
+    await AsyncStorage.setItem('AuthToken', userData.token)
+
   }
 
   return (
-    <AuthContext.Provider value={{ userToken, userName, manageUserData }}>
+    <AuthContext.Provider value={{ user, manageUserData }}>
       {props.children}
     </AuthContext.Provider>
   )
