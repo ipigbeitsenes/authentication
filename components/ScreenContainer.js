@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: sizes.statusBarHeight,
     paddingBottom: 60,
-    paddingHorizontal: 30
+    paddingHorizontal: sizes.containerSpace,
+    paddingHorizontal: sizes.containerSpace
   }
 })
 
