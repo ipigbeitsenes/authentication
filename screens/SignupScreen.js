@@ -10,6 +10,7 @@ import apis from '../config/apis'
 import useFetch from '../hooks/useFetch'
 import Alert from '../components/Alert'
 import { layoutStyles } from '../styles/Layout'
+import Form from '../components/Form'
 
 const inputs = [
   { label: 'Username', name: 'username', ref: createRef() },
@@ -96,30 +97,7 @@ export default function SignupScreen(props) {
         <Spacer size={10} />
         <Title label="Registrazione" centerText />
         <Spacer size={10} />
-        {
-          inputs.map(({ label, name, ref }, index) => {
-            return (
-              <View key={index}>
-                <Input
-                  ref={ref}
-                  label={label}
-                  // blurOnSubmit={index < inputs.length-1 ? false : true} e uguale a sotto
-                  blurOnSubmit={!(index < inputs.length - 1)}
-                  onTextChange={(text) => setFormValue(name, text)}
-                  // passiamo focus da questo input a quello successivo con enter da tastiera
-                  onSubmitEditing={() => {
-                    const nextInput = inputs[index + 1]
-
-                    if (nextInput) {
-                      nextInput.ref.current.focus()
-                    }
-                  }}
-                />
-                <Spacer size={index < inputs.length - 1 ? 10 : 5} />
-              </View>
-            )
-          })
-        }
+        <Form inputs={inputs} />
 
 
         <Button
