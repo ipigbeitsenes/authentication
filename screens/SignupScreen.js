@@ -13,12 +13,12 @@ import useFetch from '../hooks/useFetch'
 import Alert from '../components/Alert'
 import { layoutStyles } from '../styles/Layout'
 import api from '../Utility/api'
-import { rootNavigation } from '../App'
+import { rootNavigation } from '../Utility/navigation'
 
 const inputs = [
   { label: 'Username', name: 'username', ref: createRef() },
   { label: 'Email', name: 'email', ref: createRef() },
-  { label: 'Password', type: 'password', name: 'password', ref: createRef() },
+  { label: 'Password', type: 'password', name: 'password', ref: createRef(), secureTextEntry: true },
   { label: 'Confirm Password', name: 'password_confirmation', ref: createRef(), secureTextEntry: true },
   { label: 'Name', name: 'name', ref: createRef() },
   { label: 'Surname', name: 'surname', ref: createRef() },

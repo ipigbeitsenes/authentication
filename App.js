@@ -39,19 +39,15 @@
 //   },
 // })
 
+import Screens from './screens/Screens'
+import Providers from './contexts/AuthContext'
 import React, { createRef } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { AuthProvider } from './contexts/AuthContext'
-import AppNavigator from './navigators/AppNavigator'
 
-export const rootNavigation = createRef()
 
 export default function App() {
   return (
-    <AuthProvider>
-      <NavigationContainer ref={rootNavigation}>
-        <AppNavigator />
-      </NavigationContainer>
-    </AuthProvider >
+    <Providers>
+      <Screens/>
+    </Providers>
   )
 }

@@ -13,7 +13,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { layoutStyles } from '../styles/Layout'
 import apis from '../config/apis'
 import api from '../Utility/api'
-import { rootNavigation } from '../App'
+import { rootNavigation } from '../Utility/navigation'
 
 const inputs = [
   { label: 'Username', name: 'username_email', ref: createRef() },
