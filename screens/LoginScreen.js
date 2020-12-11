@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 import React, { useContext, useState, createRef } from 'react'
-=======
-import React, { createRef, useRef, useState } from 'react'
->>>>>>> salvatoreTelesco
-=======
-import React, { useContext, useState, createRef } from 'react'
->>>>>>> salvatoreTelesco
 import { ScrollView, Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
@@ -19,7 +11,6 @@ import useForm from '../hooks/useForm'
 import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../contexts/AuthContext'
 import { layoutStyles } from '../styles/Layout'
-import apis from '../config/apis'
 import api from '../Utility/api'
 import { rootNavigation } from '../App'
 

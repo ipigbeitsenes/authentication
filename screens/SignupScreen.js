@@ -101,7 +101,6 @@ export default function SignupScreen(props) {
         <Spacer size={10} />
         <Title label="Registrazione" centerText />
         <Spacer size={10} />
-<<<<<<< HEAD
         {
           inputs.map(({ label, name, ref }, index) => {
             return (
@@ -127,8 +126,6 @@ export default function SignupScreen(props) {
             )
           })
         }
-=======
->>>>>>> salvatoreTelesco
 
         <Form inputs={inputs} updateInputValue={(name, text) => setFormValue(name, text)} />
 
@@ -141,13 +138,4 @@ export default function SignupScreen(props) {
       </ScrollView>
     </View>
   )
-<<<<<<< HEAD
-<<<<<<< HEAD
 }
-=======
-
-}
->>>>>>> salvatoreTelesco
-=======
-}
->>>>>>> salvatoreTelesco
