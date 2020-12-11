@@ -1,88 +1,100 @@
-import React, { createRef, useRef, useState } from 'react'
+import React, { useContext, useState, createRef } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
 import Spacer from '../components/Spacer'
 import Title from '../components/Title'
+import Form from '../components/Form'
 import Button from '../components/Button'
 import Alert from '../components/Alert'
 import useForm from '../hooks/useForm'
-import { layoutStyles } from '../styles/Layout'
 import useFetch from '../hooks/useFetch'
+import { AuthContext } from '../contexts/AuthContext'
+import { layoutStyles } from '../styles/Layout'
 import apis from '../config/apis'
-import Forms from '../components/Forms'
+import api from '../Utility/api'
+import { rootNavigation } from '../App'
 
 const inputs = [
   { label: 'Username', name: 'username_email', ref: createRef() },
-  { label: 'Password', type: 'password', name: 'password', ref: createRef() }
+  { label: 'Password', name: 'password', ref: createRef(), secureTextEntry: true },
 ]
 
-export default function LoginScreen(props) {
-  // const [alertProps, setAlertProps] = useState(alertPropsDefault)
-  const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
+export default function LoginScreen({ navigation, route }) {
   const requiredInputs = ['username_email', 'password']
   const [formData, setFormValue] = useForm(requiredInputs)
-
-
   const [error, setError] = useState(false)
   const [messageOpen, setMessageOpen] = useState(false)
+  //const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
+  const { manageUserData } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
 
-  const submitLogin = () => {
-
-    // funzione che verifica se l'username è già utilizzato da altri utenti
-
-    //if (!formData.values.username) return // evito di fare chiamate al server se l'utente non ha inserito nulla
-
-    //if (requestRunning) return // verifico che non ci siano altre richieste in corso
-
-    setRequestRunning({
+  const submitLogin = async () => {
+    // imposto la richiesta come in corso
+    /*setRequestRunning({
       data: formData.values,
-      onSucces: () => {
-        console.log('sucessful login')
+      onSuccess: (payload) => {
+        manageUserData(payload)
       },
       onFail: (err) => {
+        console.log(err)
         setError(err) // impostiamo il messaggio dell'Alert
         setMessageOpen(true) // apriamo l'Alert
+      },
+    })*/
+    try {
+      setLoading(true)
+      const response = await api('authentication/login-action', formData.values)
+      const { result, errors, payload } = response
+      if (result) {
+        manageUserData(payload)
+        //navigation.navigate('Dashboard')
+        rootNavigation.current.navigate('MainNavigator')
+      } else {
+        setError(errors[0].message)
+        setMessageOpen(true)
       }
-    })
+
+    } catch (err) {
+      console.warn(err)
+      setError(err)
+      setMessageOpen(true)
+
+    } finally {
+      setLoading(false)
+    }
+
+
+
+
   }
 
-  // funzione che chiude l'alert senza modificare message e typology
-  // const closeAlert = () => {
-  //   const newAlertProps = {...alertProps}
-  //   newAlertProps.status = false
-  //   setAlertProps(newAlertProps)
-  // }
-
   return (
-    <View style={{ flex: 1 }}>
-      <Alert
-        message={error}
-        open={messageOpen}
-        onClose={() => setMessageOpen(false)}
-        typology={error ? 'danger' : 'success'} />
+    <>
+      <Alert open={messageOpen} message={error} onClose={() => setMessageOpen()} typology={error ? 'danger' : 'success'} />
+      <View style={layoutStyles.container}>
 
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false} // nasconde la scrollbar
-        contentContainerStyle={layoutStyles.container}
-        style={{ flexGrow: 1 }}>
+
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false} // nasconde la scrollbar
+          contentContainerStyle={layoutStyles.container}
+          style={{ flexGrow: 1 }}>
+
+          <Spacer size={10} />
+          <Title label="Login" centerText />
+          <Spacer size={10} />
+          <Form inputs={inputs} updateInputValue={setFormValue} />
+          <Button
+            disabled={loading || !formData.valid}
+            onPress={submitLogin}
+          >Accedi</Button>
+
+        </ScrollView>
 
         <Spacer size={10} />
-        <Title label="Login" centerText />
-        <Spacer size={10} />
-
-        <Forms inputs={inputs} onTextChange={(name, text) => setFormValue(name, text)}></Forms>
-
-        <Button
-          disabled={requestRunning || !formData.valid}
-          onPress={submitLogin}
-        >Accedi</Button>
-
-      </ScrollView>
-
-      <Spacer size={10} />
-    </View>
+      </View>
+    </>
   )
 
 }

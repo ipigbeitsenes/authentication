@@ -7,13 +7,13 @@ const MainStack = createStackNavigator()
 export default function MainNavigator () {
   return (
     <MainStack.Navigator
-      initialRouteName="Welcome"
+      initialRouteName="Dashboard"
       screenOptions={{
         // headerShown: false
         cardStyle: { paddingTop: 0 }
       }}
     >
-      <MainStack.Screen name="DashboardScreen" component={DashboardScreen} />
+      <MainStack.Screen name="Dashboard" component={DashboardScreen} />
     </MainStack.Navigator>
   )
 }

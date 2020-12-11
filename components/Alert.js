@@ -53,24 +53,24 @@ export default function Alert({
   let typologyContainerStyle = typology === "danger" ? styles.containerDanger : styles.containerSuccess
 
   return (
-    <View style={[styles.container, typologyContainerStyle]}>
-      <Animated.View style={[styles.containerInternal, typologyContainerStyle, {
-        transform: [{
-          scale: animation.interpolate({
-            inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
-            outputRange: [0, 1] // il valore di scale basato sui valori di Animated.Value
-          })
-        }],
-      }]}>
+    <Animated.View style={[styles.container, {
+      transform: [{
+        scale: animation.interpolate({
+          inputRange: [0, 1], // i valori di Animated.Value, gestiti all'interno di useEffect
+          outputRange: [0, 1] // il valore di scale basato sui valori di Animated.Value
+        })
+      }],
+    }]}>
+      <View style={[styles.containerInternal, typologyContainerStyle]}>
         {
           message && <Text style={styles.message}>{message}</Text>
         }
-        {onClose && ( // stampo il bottone solo se la componente riceve la props onClose
-          <Button color={colors.black} onPress={onClose}>Close</Button>
-        )}
-      </Animated.View>
-    </View>
 
+        {onClose && ( // stampo il bottone solo se la componente riceve la props onClose
+          <Button style={styles.button} color={colors.black} onPress={onClose}>Close</Button>
+        )}
+      </View>
+    </Animated.View>
   )
 }
 
@@ -85,6 +85,8 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     zIndex: 1,
+    paddingHorizontal: sizes.containerSpace,
+    paddingTop: 10
   },
   containerInternal: {
     backgroundColor: 'red',
@@ -93,7 +95,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderRadius: 15
+    borderRadius: 15,
+    width: '100%'
   },
   containerSuccess: {
     backgroundColor: colors.green
@@ -105,6 +108,11 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontWeight: 'bold',
     fontSize: 16,
+    paddingRight: 15,
+    flexBasis: '70%'
+  },
+  button: {
+    flexBasis: '30%'
   }
 })
 

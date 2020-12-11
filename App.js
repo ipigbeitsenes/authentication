@@ -39,17 +39,19 @@
 //   },
 // })
 
-import React from 'react'
+import React, { createRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthProvider } from './contexts/AuthContext'
 import AppNavigator from './navigators/AppNavigator'
 
+export const rootNavigation = createRef()
+
 export default function App() {
   return (
-    <NavigationContainer>
-      <AuthProvider>
+    <AuthProvider>
+      <NavigationContainer ref={rootNavigation}>
         <AppNavigator />
-      </AuthProvider>
-    </NavigationContainer>
+      </NavigationContainer>
+    </AuthProvider >
   )
 }
