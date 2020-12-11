@@ -1,24 +1,22 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useCallback, useState } from 'react'
 import { setToken } from '../Utility/api'
 import AsyncStorage from '@react-native-community/async-storage'
 
 export const AuthContext = createContext()
 
-export function AuthProvider(props) {
-
+export default function AuthProvider ({ children }) {
   const [user, setUser] = useState()
 
-  const manageUserData = async (userData) => {
+  const manageUserData = useCallback(async (userData) => {
     console.log(userData)
     setUser(userData.user)
     setToken(userData.token)
     await AsyncStorage.setItem('AuthToken', userData.token)
-
-  }
+  }, [])
 
   return (
     <AuthContext.Provider value={{ user, manageUserData }}>
-      {props.children}
+      {children}
     </AuthContext.Provider>
   )
 }
