@@ -34,6 +34,13 @@ export default function SignupScreen(props) {
   const [messageOpen, setMessageOpen] = useState(false)
 
   const submitSignup = () => {
+<<<<<<< HEAD
+=======
+
+    // verifico che non ci siano altre richieste in corso
+    if (requestRunning) return
+
+>>>>>>> salvatoreTelesco
     // imposto la richiesta come in corso
     setRequestRunning({
       data: formData.values,
@@ -76,6 +83,31 @@ export default function SignupScreen(props) {
         <Spacer size={10} />
         <Title label="Registrazione" centerText />
         <Spacer size={10} />
+        {
+          inputs.map(({ label, name, ref }, index) => {
+            return (
+              <View key={index}>
+                <Input
+                  ref={ref}
+                  label={label}
+                  // blurOnSubmit={index < inputs.length-1 ? false : true} e uguale a sotto
+                  blurOnSubmit={!(index < inputs.length - 1)}
+                  onTextChange={(text) => setFormValue(name, text)}
+                  // passiamo focus da questo input a quello successivo con enter da tastiera
+                  onSubmitEditing={() => {
+                    const nextInput = inputs[index + 1]
+
+                    if (nextInput) {
+                      nextInput.ref.current.focus()
+                    }
+                  }}
+                  secureTextEntry={inputs[index].name == 'password' || 'password_confirmation' ? true : false}
+                />
+                <Spacer size={index < inputs.length - 1 ? 10 : 5} />
+              </View>
+            )
+          })
+        }
 
         <Form inputs={inputs} updateInputValue={(name, text) => setFormValue(name, text)} />
 
@@ -88,4 +120,9 @@ export default function SignupScreen(props) {
       </ScrollView>
     </View>
   )
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> salvatoreTelesco
