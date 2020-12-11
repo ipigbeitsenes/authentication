@@ -24,18 +24,16 @@ export default function LoginScreen({ navigation, route }) {
   const [formData, setFormValue] = useForm(requiredInputs)
   const [error, setError] = useState(false)
   const [messageOpen, setMessageOpen] = useState(false)
-  //const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
   const { manageUserData } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
 
   const submitLogin = async () => {
     try {
       setLoading(true)
-      const response = await api('authentication/login-action', formData.values)
+      const response = await api.post('authentication/login-action', formData.values)
       const { result, errors, payload } = response
       if (result) {
         manageUserData(payload)
-        //navigation.navigate('Dashboard')
         rootNavigation.current.navigate('MainNavigator')
       } else {
         setError(errors[0].message)
@@ -69,36 +67,8 @@ export default function LoginScreen({ navigation, route }) {
 
           <Form inputs={inputs} updateInputValue={setFormValue} />
 
-          {
-            inputs.map(({ label, name, ref }, index) => {
-              return (
-                <View key={index}>
-                  <Input
-
-                    ref={ref}
-                    label={label}
-                    blurOnSubmit={!(index < inputs.length - 1)}
-                    onTextChange={(text) => setFormValue(name, text)}
-                    onSubmitEditing={() => {
-                      const nextInput = inputs[index + 1]
-
-                      if (nextInput) {
-                        nextInput.ref.current.focus()
-                      }
-
-                    }}
-                    secureTextEntry={inputs[index].name == 'password' ? true : false}
-                  />
-                  <Spacer size={index < inputs.length - 1 ? 10 : 5} />
-                </View>
-
-              )
-
-            })
-          }
-
           <Button
-            disabled={requestRunning || !formData.valid}
+            disabled={loading || !formData.valid}
             onPress={submitLogin}
           >Accedi</Button>
 

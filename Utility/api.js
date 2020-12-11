@@ -6,9 +6,17 @@ export function setToken(token) {
     authToken = token
 }
 
-export default async function api(url, params) {
-    return await (await fetch(`${ApiConf.baseUrl}/${url}`,
-        {
+class Api {
+    async get (url) {
+        return (await fetch(`${ApiConf.baseUrl}/${url}`, {
+            headers: {
+                Authorization: authToken,
+            }
+        })).json()
+    }
+
+    async post (url, params = {}) {
+        return (await fetch(`${ApiConf.baseUrl}/${url}`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: authToken,
@@ -16,4 +24,8 @@ export default async function api(url, params) {
             body: JSON.stringify(params),
             method: 'POST'
         })).json()
+    }
 }
+
+const api = new Api()
+export default api

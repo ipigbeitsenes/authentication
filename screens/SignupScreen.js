@@ -58,7 +58,7 @@ export default function SignupScreen(props) {
 
     try {
       setLoading(true)
-      const { result, errors, payload } = await api('authentication/signup-action', formData.values)
+      const { result, errors, payload } = await api.post('authentication/signup-action', formData.values)
       if (result) {
         manageUserData(payload)
         rootNavigation.current.navigate('MainNavigator')
@@ -101,31 +101,6 @@ export default function SignupScreen(props) {
         <Spacer size={10} />
         <Title label="Registrazione" centerText />
         <Spacer size={10} />
-        {
-          inputs.map(({ label, name, ref }, index) => {
-            return (
-              <View key={index}>
-                <Input
-                  ref={ref}
-                  label={label}
-                  // blurOnSubmit={index < inputs.length-1 ? false : true} e uguale a sotto
-                  blurOnSubmit={!(index < inputs.length - 1)}
-                  onTextChange={(text) => setFormValue(name, text)}
-                  // passiamo focus da questo input a quello successivo con enter da tastiera
-                  onSubmitEditing={() => {
-                    const nextInput = inputs[index + 1]
-
-                    if (nextInput) {
-                      nextInput.ref.current.focus()
-                    }
-                  }}
-                  secureTextEntry={inputs[index].name == 'password' || 'password_confirmation' ? true : false}
-                />
-                <Spacer size={index < inputs.length - 1 ? 10 : 5} />
-              </View>
-            )
-          })
-        }
 
         <Form inputs={inputs} updateInputValue={(name, text) => setFormValue(name, text)} />
 
