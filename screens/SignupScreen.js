@@ -13,7 +13,7 @@ import useFetch from '../hooks/useFetch'
 import Alert from '../components/Alert'
 import { layoutStyles } from '../styles/Layout'
 import api from '../Utility/api'
-import { rootNavigation } from '../App'
+import { rootNavigation } from '../Utility/navigation.js'
 
 const inputs = [
   { label: 'Username', name: 'username', ref: createRef() },

@@ -1,6 +1,6 @@
 import ApiConf from '../config/apis'
 
-const authToken = ''
+let authToken = ''
 
 export function setToken(token) {
     authToken = token
