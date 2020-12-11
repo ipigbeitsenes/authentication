@@ -12,7 +12,7 @@ import useFetch from '../hooks/useFetch'
 import { AuthContext } from '../contexts/AuthContext'
 import { layoutStyles } from '../styles/Layout'
 import api from '../Utility/api'
-import { rootNavigation } from '../App'
+import { rootNavigation } from '../Utility/navigation.js'
 
 const inputs = [
   { label: 'Username', name: 'username_email', ref: createRef() },
