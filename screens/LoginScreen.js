@@ -27,21 +27,12 @@ export default function LoginScreen({ navigation, route }) {
   const { manageUserData } = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
 
-<<<<<<< HEAD
-
-  const submitLogin = () => {
-    // imposto la richiesta come in corso
-    setRequestRunning({
-      data: formData.values,
-      onSuccess: (payload) => {
-=======
   const submitLogin = async () => {
     try {
       setLoading(true)
       const response = await api.post('authentication/login-action', formData.values)
       const { result, errors, payload } = response
       if (result) {
->>>>>>> 0f3b6957c23dc93fcaa5292f4c31c07de4637d88
         manageUserData(payload)
         rootNavigation.current.navigate('MainNavigator')
       } else {
@@ -64,29 +55,6 @@ export default function LoginScreen({ navigation, route }) {
       <Alert open={messageOpen} message={error} onClose={() => setMessageOpen()} typology={error ? 'danger' : 'success'} />
       <View style={layoutStyles.container}>
 
-<<<<<<< HEAD
-
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          /**
-           * `keyboardShouldPersistTaps="handled"`
-           * fa in modo che quando un input è in focus, se si clicca
-           * su un'altra parte dello schermo la tastiera venga chiusa
-          */
-          showsVerticalScrollIndicator={false} // nasconde la scrollbar
-        >
-          <Spacer size={10} />
-          <Title label="Login" centerText />
-          <Spacer size={10} />
-          <Form inputs={inputs} updateInputValue={setFormValue} />
-          <Button
-            disabled={requestRunning || !formData.valid}
-            onPress={submitLogin}
-          >Login</Button>
-          <Spacer size={10} />
-        </ScrollView>
-      </View>
-=======
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false} // nasconde la scrollbar
@@ -106,8 +74,7 @@ export default function LoginScreen({ navigation, route }) {
 
         </ScrollView>
 
-    </View>
->>>>>>> 0f3b6957c23dc93fcaa5292f4c31c07de4637d88
+      </View>
     </>
   )
 
