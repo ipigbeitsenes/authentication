@@ -18,7 +18,7 @@ export default function useForm(requiredInputs) {
     // esempio esplicito di funzionamento del metodo every() (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every)
     // let formIsValid = true
     // requiredInputs.forEach((input) => {
-    //   if (!notEmptyKeys.includes(input)) {
+    //   if (!notEm ptyKeys.includes(input)) {
     //     formIsValid = false
     //   }
     // })
