@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState, forwardRef } from 'react'
 import { Animated, StyleSheet, Text, TextInput, View } from 'react-native'
 import colors from '../config/colors'
-
 /**
  * ref non può essere passata come prop
  * quindi dobbiamo utilizzare `forwardRef`, che la espone
@@ -54,7 +53,7 @@ const Input = forwardRef(({
   return (
     <View style={[styles.container, containerStyle]}>
       <Animated.View
-      
+
         //rende cliccabile l'input anche nel placeholder
         pointerEvents='none'
 
@@ -137,6 +136,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 5
   },
   input: {
+    backgroundColor: colors.BackgroundInput,
     height: 40,
     borderBottomWidth: 2,
     borderBottomColor: colors.gray,
@@ -199,5 +199,3 @@ export default Input
 // }
 
 // export default Input
-
-

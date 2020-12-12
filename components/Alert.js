@@ -79,6 +79,7 @@ export default function Alert({
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: sizes.containerSpace,
     width: '100%',
     position: 'absolute',
     top: 0,
@@ -125,6 +126,12 @@ const styles = StyleSheet.create({
 //   onClose: PropTypes.func
 // }
 
+<<<<<<< HEAD
 Alert.defaultProps = {
   typology: 'success'
 }
+=======
+// Alert.defaultProps = {
+//   typology: 'success'
+// }
+>>>>>>> 0f3b6957c23dc93fcaa5292f4c31c07de4637d88

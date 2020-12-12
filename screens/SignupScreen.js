@@ -1,4 +1,5 @@
-import React, { useState, useRef, createRef } from 'react'
+import React, { useState, useRef, createRef, useContext } from 'react'
+import { AuthContext } from '../contexts/AuthContext'
 import { ScrollView, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
@@ -11,11 +12,13 @@ import apis from '../config/apis'
 import useFetch from '../hooks/useFetch'
 import Alert from '../components/Alert'
 import { layoutStyles } from '../styles/Layout'
+import api from '../Utility/api'
+import { rootNavigation } from '../Utility/navigation.js'
 
 const inputs = [
-  { label: 'Username', name: 'username', ref: createRef(), autoCapitalize: 'none' },
-  { label: 'Email', name: 'email', ref: createRef(), autoCapitalize: 'none' },
-  { label: 'Password', name: 'password', ref: createRef(), secureTextEntry: true },
+  { label: 'Username', name: 'username', ref: createRef() },
+  { label: 'Email', name: 'email', ref: createRef() },
+  { label: 'Password', type: 'password', name: 'password', ref: createRef() },
   { label: 'Confirm Password', name: 'password_confirmation', ref: createRef(), secureTextEntry: true },
   { label: 'Name', name: 'name', ref: createRef() },
   { label: 'Surname', name: 'surname', ref: createRef() },
@@ -28,20 +31,22 @@ console.log(Object.keys(oggetto).length) */
 export default function SignupScreen(props) {
   const requiredInputs = ['username', 'email', 'password', 'password_confirmation', 'name', 'surname']
   const [formData, setFormValue] = useForm(requiredInputs)
-  const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/signup-action`, "POST")
+  //const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/signup-action`, "POST")
 
   const [error, setError] = useState(false)
   const [messageOpen, setMessageOpen] = useState(false)
+  const { user, manageUserData } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
 
-  const submitSignup = () => {
+  const submitSignup = async () => {
     // imposto la richiesta come in corso
-    setRequestRunning({
+    /*setRequestRunning({
       data: formData.values,
       onSuccess: () => {
-        /**
+        
          * Per il momento facciamo solo un log, poi quando saranno implementati sia
          * signup che login faremo un redirect alla homepage
-         */
+         *
         console.log('sucessful signup')
       },
       onFail: (err) => {
@@ -49,7 +54,27 @@ export default function SignupScreen(props) {
         setError(err) // impostiamo il messaggio dell'Alert
         setMessageOpen(true) // apriamo l'Alert
       },
-    })
+    })*/
+
+    try {
+      setLoading(true)
+      const { result, errors, payload } = await api.post('authentication/signup-action', formData.values)
+      if (result) {
+        manageUserData(payload)
+        rootNavigation.current.navigate('MainNavigator')
+      } else {
+        setError(errors[0].message)
+        setMessageOpen(true)
+      }
+
+    } catch (err) {
+      setError(err)
+      setMessageOpen(true)
+
+    } finally {
+      setLoading(false)
+    }
+
   }
 
 
@@ -80,7 +105,7 @@ export default function SignupScreen(props) {
         <Form inputs={inputs} updateInputValue={(name, text) => setFormValue(name, text)} />
 
         <Button
-          disabled={requestRunning || !formData.valid}
+          disabled={loading || !formData.valid}
           onPress={submitSignup}
         >Registrati</Button>
 
