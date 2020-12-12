@@ -61,40 +61,6 @@ export default function SignupScreen(props) {
         onClose={() => setMessageOpen(false)}
         typology={error ? 'danger' : 'success'}
       />
-<<<<<<< HEAD
-      <Input
-        label="Email"
-        blurOnSubmit={false}
-        onTextChange={(text) => changeFormValue('username', text)}
-      />
-      <Input
-        label="Name"
-        blurOnSubmit={false}
-        onTextChange={(text) => changeFormValue('username', text)}
-      />
-      <Input
-        label="Lastname"
-        blurOnSubmit={false}
-        onTextChange={(text) => changeFormValue('username', text)}
-      />
-      <Spacer size={10} />
-      <Input
-        label="Password"
-        onTextChange={(text) => setFormValue('password', text)}
-      />
-      <Spacer size={10} />
-      <Input
-        label="Conferma password"
-        onTextChange={(text) => setFormValue('password_confirmation', text)}
-      />
-      <Spacer size={5} />
-      <Button
-        title="Registrati"
-        disabled={!formData.valid}
-        onPress={submitSignup}
-      />
-    </ScreenContainer>
-=======
 
       <ScrollView
         /**
@@ -121,6 +87,5 @@ export default function SignupScreen(props) {
         <Spacer size={10} />
       </ScrollView>
     </View>
->>>>>>> 61e84953c50877e70d034a964fed5f7958381c14
   )
 }
