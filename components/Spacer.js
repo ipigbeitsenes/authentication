@@ -9,8 +9,7 @@ import sizes from '../config/sizes'
  */
 const Spacer = ({
   size = 0, // valore di default
-  horizontal,
-  ...props // props di View aggiuntive
+  horizontal,...props // props di View aggiuntive
 }) => {
   return (
     <View style={{
