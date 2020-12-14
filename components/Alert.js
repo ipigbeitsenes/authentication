@@ -79,6 +79,7 @@ export default function Alert({
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: sizes.containerSpace,
     width: '100%',
     position: 'absolute',
     top: 0,

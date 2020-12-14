@@ -1,4 +1,4 @@
-import React, { useRef, useState, createRef } from 'react'
+import React, { useContext, useState, createRef } from 'react'
 import { ScrollView, Text, View } from 'react-native'
 import ScreenContainer from '../components/ScreenContainer'
 import Input from '../components/Input'
@@ -9,71 +9,75 @@ import Button from '../components/Button'
 import Alert from '../components/Alert'
 import useForm from '../hooks/useForm'
 import useFetch from '../hooks/useFetch'
+import { AuthContext } from '../contexts/AuthContext'
 import { layoutStyles } from '../styles/Layout'
-import apis from '../config/apis'
-
-const alertPropsDefault = { status: false, message: '', typology: 'success' }
+import api from '../Utility/api'
+import { rootNavigation } from '../Utility/navigation.js'
 
 const inputs = [
-  { label: 'Username', name: 'username_email', ref: createRef(), autoCapitalize: 'none' },
+  { label: 'Username', name: 'username_email', ref: createRef() },
   { label: 'Password', name: 'password', ref: createRef(), secureTextEntry: true },
 ]
 
-export default function LoginScreen(props) {
+export default function LoginScreen({ navigation, route }) {
   const requiredInputs = ['username_email', 'password']
   const [formData, setFormValue] = useForm(requiredInputs)
   const [error, setError] = useState(false)
   const [messageOpen, setMessageOpen] = useState(false)
-  const [requestRunning, setRequestRunning] = useFetch(`${apis.baseUrl}/authentication/login-action`, "POST")
+  const { manageUserData } = useContext(AuthContext)
+  const [loading, setLoading] = useState(false)
 
-  const submitLogin = () => {
-    // verifico che non ci siano altre richieste in corso
-    if (requestRunning) return
+  const submitLogin = async () => {
+    try {
+      setLoading(true)
+      const response = await api.post('authentication/login-action', formData.values)
+      const { result, errors, payload } = response
+      if (result) {
+        manageUserData(payload)
+        rootNavigation.current.navigate('MainNavigator')
+      } else {
+        setError(errors[0].message)
+        setMessageOpen(true)
+      }
 
-    // imposto la richiesta come in corso
-    setRequestRunning({
-      data: formData.values,
-      onSucces: () => {
-        /**
-         * Per il momento facciamo solo un log, poi quando saranno implementati sia
-         * signup che login faremo un redirect alla homepage
-         */
-        console.log('sucessful login')
-      },
-      onFail: (err) => {
-        console.log(err)
-        setError(err) // impostiamo il messaggio dell'Alert
-        setMessageOpen(true) // apriamo l'Alert
-      },
-    })
+    } catch (err) {
+      console.warn(err)
+      setError(err)
+      setMessageOpen(true)
+
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
     <>
-    <Alert open={messageOpen} message={error} onClose={() => setMessageOpen()} typology={error ? 'danger' : 'success'} />
-    <View style={layoutStyles.container}>
-      
+      <Alert open={messageOpen} message={error} onClose={() => setMessageOpen()} typology={error ? 'danger' : 'success'} />
+      <View style={layoutStyles.container}>
 
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        /**
-         * `keyboardShouldPersistTaps="handled"`
-         * fa in modo che quando un input è in focus, se si clicca
-         * su un'altra parte dello schermo la tastiera venga chiusa
-        */
-        showsVerticalScrollIndicator={false} // nasconde la scrollbar
-      >
-        <Spacer size={10} />
-        <Title label="Login" centerText />
-        <Spacer size={10} />
-        <Form inputs={inputs} updateInputValue={setFormValue} />
-        <Button
-          disabled={requestRunning || !formData.valid}
-          onPress={submitLogin}
-        >Login</Button>
-        <Spacer size={10} />
-      </ScrollView>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false} // nasconde la scrollbar
+          contentContainerStyle={layoutStyles.container}
+          style={{ flexGrow: 1 }}>
+
+          <Spacer size={10} />
+          <Title label="Login" centerText />
+          <Spacer size={10} />
+
+          <Form inputs={inputs} updateInputValue={setFormValue} />
+
+          <Button
+            disabled={loading || !formData.valid}
+            onPress={submitLogin}
+          >Accedi</Button>
+
+        </ScrollView>
+
     </View>
     </>
   )
+
 }
+
+
