@@ -5,12 +5,13 @@ import { rootNavigation } from '../Utility/navigation.js'
 import useLoader from "../hooks/useLoader.js"
 export default function Screens(){
     const loading = useLoader();
+
     return (
         loading
             ? null
             :
             <NavigationContainer ref={rootNavigation}>
-            <AppNavigator />
+                <AppNavigator />
             </NavigationContainer>
     )
 }

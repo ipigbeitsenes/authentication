@@ -8,27 +8,24 @@ export const AuthContext = createContext()
 
 export default function AuthProvider ({ children }) {
   const [user, setUser] = useState()
-  const [token, setTokenProv]=useState()
 
   const manageUserData = useCallback(async (userData) => {
     console.log(userData)
     setUser(userData.user)
     setToken(userData.token)
-    setTokenProv(userData.token)
-    await AsyncStorage.setItem('AuthToken', userData.token)
+    AsyncStorage.setItem('AuthToken', userData.token)
   }, [])
 
   const onLogout = useCallback(async () => {
-    setUser(null)
-    setToken('')
-    setTokenProv('')
-    await AsyncStorage.removeItem('AuthToken') // cancello token dalla memoria
-
     // cancello la storia di navigazione e vado sulla schermata di autenticazione
     rootNavigation.current.dispatch(CommonActions.reset({
       index: 0,
       routes: [{ name: "AuthNavigator" }]
     }))
+
+    setUser(null)
+    setToken('')
+    AsyncStorage.removeItem('AuthToken') // cancello token dalla memoria
   }, [])
 
   return (

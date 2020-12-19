@@ -7,12 +7,12 @@ import { AuthContext } from '../contexts/AuthContext'
 const AppStack = createStackNavigator()
 
 export default function AppNavigator() {
-    const { token } = useContext(AuthContext)
+    const { user } = useContext(AuthContext)
     
 
     return (
         <AppStack.Navigator
-            initialRouteName={token ? "MainNavigator" : "AuthNavigator"}
+            initialRouteName={user ? "MainNavigator" : "AuthNavigator"}
             screenOptions={{
                 headerShown: false,
                 cardStyle: { paddingTop: 0 },
